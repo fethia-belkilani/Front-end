@@ -1,0 +1,15 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.ic {
+    font-size: 25px;
+    margin-right: 20px;
+    
+  }     
+  
+  .cal-week-view .cal-time-events .cal-day-column {
+    margin-right: 10px;
+  }
+
+  .cal-week-view .cal-hour {
+    width: calc(100% + 10px);
+  }

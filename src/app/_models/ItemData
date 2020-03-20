@@ -1,0 +1,6 @@
+export interface ItemData {
+  name: string;
+  id: number | string;
+  address: string;
+  checked: boolean;
+}
