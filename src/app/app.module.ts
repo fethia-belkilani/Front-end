@@ -21,6 +21,7 @@ import { LoginComponent } from './login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { fakeBackendProvider } from './_helpers';
 import { HelloComponent } from './pages/hello/hello.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 registerLocaleData(en);
@@ -45,6 +46,8 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgbModule,
+
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
