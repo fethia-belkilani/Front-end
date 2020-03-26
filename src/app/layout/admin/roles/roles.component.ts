@@ -1,7 +1,8 @@
-import { Component, OnInit,  ViewEncapsulation
+import {
+  Component, OnInit, ViewEncapsulation
 } from '@angular/core';
 // @ts-ignore
-import { ItemData} from '../../../_models/ItemData';
+import { ItemData } from '../../../_models/ItemData';
 
 @Component({
   selector: 'app-roles',
@@ -47,7 +48,7 @@ export class RolesComponent implements OnInit {
 
   checkAll(value: boolean): void {
     this.displayData.forEach(data => {
-        data.checked = value;
+      data.checked = value;
     });
     this.refreshStatus();
   }

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../_services';
 import { ReactiveFormsModule } from '@angular/forms';
+import { da } from 'date-fns/locale';
+import { Role } from 'src/app/_models';
 
 
 @Component({ templateUrl: 'login.component.html' })
@@ -52,7 +54,9 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate(['hello']);
+                    console.log(data);
+                    if(data.role === Role.Admin) this.router.navigate(['admin']);
+                    else this.router.navigate(['user']);
                 },
                 error => {
                     this.error = error;

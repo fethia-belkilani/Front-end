@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class RelationsComponent implements OnInit {
   optionList = [{ label: 'Lucy', value: 'lucy', age: 20 }, { label: 'Jack', value: 'jack', age: 22 }];
   selectedValue = null;
-  listOfOption = ['validateur1', 'validateur2','validateur3', 'validateur4'];
+  listOfOption = ['validateur1', 'validateur2', 'validateur3', 'validateur4'];
 
 
 

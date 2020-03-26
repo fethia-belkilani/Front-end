@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy,
+import {
+  Component, OnInit, ChangeDetectionStrategy,
   ViewChild,
-  TemplateRef } from '@angular/core';
+  TemplateRef
+} from '@angular/core';
 import localeFr from '@angular/common/locales/fr'; // to register french
 
 
@@ -10,8 +12,6 @@ import {
   CalendarEvent,
   CalendarMonthViewDay,
   CalendarView,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
 } from 'angular-calendar';
 import { WeekViewHour } from 'calendar-utils';
 
@@ -52,7 +52,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
       if (
         this.selectedDays.some(
@@ -87,7 +87,7 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
-  
+
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter(event => event !== eventToDelete);
   }
@@ -96,14 +96,9 @@ export class CalendarComponent implements OnInit {
     this.view = view;
   }
 
-  
-
   constructor() { }
-
-
 
   ngOnInit() {
   }
-
 
 }
