@@ -1,13 +1,12 @@
 <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar" *ngIf="currentUser" nzCollapsible nzWidth="256px" nzBreakpoint="md"
-        [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <nz-sider class="menu-sidebar" *ngIf="currentUser" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+
         <div class="sidebar-logo">
-            <a href="https://ng.ant.design/" target="_blank">
+            <a href="" target="_blank">
                 <img src="../assets/images/timetrackerlogo.svg" alt="logo">
                 <h1>TimeVioo</h1>
             </a>
         </div>
-        <button nz-button nzType="primary" (click)="logout()">Logout</button>
         <ul *ngIf="isAdmin" nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
             <li nz-submenu nzOpen nzTitle="Utilisateurs" nzIcon="user">
                 <ul>
@@ -42,10 +41,25 @@
     </nz-sider>
     <nz-layout>
         <nz-header *ngIf="currentUser">
+
             <div class="app-header">
+
+
                 <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
                     <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
                 </span>
+
+                <span class="he">
+                    <i nz-icon nzType="user" nzTheme="outline" style="padding-right: 20px;"></i> 
+
+                    <button nz-button nzType="primary" (click)="logout()" style="padding-right:20px;">Logout</button>
+
+                    
+                    
+
+
+                </span>
+
             </div>
         </nz-header>
         <nz-content>
