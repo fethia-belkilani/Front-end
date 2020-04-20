@@ -7,6 +7,7 @@ import { CalendarComponent } from './admin/calendar/calendar.component';
 import { HomeComponent } from './user/home/home.component';
 import { Role } from './../_models';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,8 @@ const routes: Routes = [
       { path: 'relations', component: RelationsComponent, data: { roles: [Role.Admin] } },
       { path: 'calendar', component: CalendarComponent, data: { roles: [Role.Admin] } },
       { path: 'roles', component: RolesComponent, data: { roles: [Role.Admin] } },
+      { path: 'test', component: TestComponent,  },
+
     ]
   },
 ];

@@ -2,15 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { ProjectService } from './../../../_services/project.service';
+
 
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
+  //imputations: any=[];
+
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
   x = moment();
   today = moment().format("l");
@@ -24,10 +29,7 @@ export class HomeComponent implements OnInit {
     }
     return days;
   }
-
   currentWeek = this.getWeek(this.x);
-
-
   next() {
     this.x = this.x.weekday(8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
@@ -35,44 +37,92 @@ export class HomeComponent implements OnInit {
   prev() {
     this.x = this.x.weekday(-8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
+    
   }
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //m=moment().weekday(8);
+  editField: string;
+
+    //projectList: Array<Project> = [];
+    projectList: any=[];
+    awaitingProjectList: any = [];
+    selectedProject: any=[];
 
 
+    updateList(id: number, property: string, event: any) {
+      const editField = event.target.textContent;
+      this.projectList[id][property] = editField;
+    }
 
-  title = 'modal2';
-  editProfileForm: FormGroup;
-  imputList = [
-    { id: "1", titre: "Projet 100", lundi: "0.5", mardi: "0.25", mercredi: "1", jeudi: "0.5", vendredi: "1", samedi: "", dimanche: "" },
-    { id: "2", titre: "Projet 200", lundi: "0.5", mardi: "0.25", mercredi: "1", jeudi: "0.5", vendredi: "1", samedi: "", dimanche: "" },
-    { id: "3", titre: "Projet 300", lundi: "0.5", mardi: "0.25", mercredi: "1", jeudi: "0.5", vendredi: "1", samedi: "", dimanche: "" }
-  ];
-  constructor(private fb: FormBuilder, private modalService: NgbModal) { }
+    remove(id: any) {
+     // this.awaitingProjectList.push(this.projectList[id]);
+      this.projectList.splice(id, 1);
+    }
+   
+
+    
+    changeValue(id: number, property: string, event: any) {
+      this.editField = event.target.textContent;
+    }
+
+  constructor(private projectService:ProjectService) { }
+
   ngOnInit() {
-    this.editProfileForm = this.fb.group({
-      firstname: [''],
-      lastname: [''],
-      username: [''],
-      email: ['']
-    });
+    this.getProjects();
   }
-  openModal(targetModal, user) {
-    this.modalService.open(targetModal, {
-      centered: true,
-      backdrop: 'static'
-    });
 
-    this.editProfileForm.patchValue({
-      firstname: user.firstname,
-      lastname: user.lastname,
-      username: user.username,
-      email: user.email
-    });
+  
+
+  getProjects(){
+    this.projectService.getProjects().subscribe(
+      res=>{
+       this.projectList=res;   },
+      err=>{
+        console.log(err);
+      }
+    ) 
   }
-  onSubmit() {
-    this.modalService.dismissAll();
-    console.log("res:", this.editProfileForm.getRawValue());
+
+  /////////////////////////////   Modal    //////////////////
+
+  isVisible = false;
+  private modalService: NgbModal
+
+  openModal(targetModal) {
+   this.modalService.open(targetModal, {
+    centered: true,
+    backdrop: 'static'
+   });
   }
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+  ////////////////////
+
+  add() {  
+    const project = this.awaitingProjectList[0];
+    this.projectList.push(project);
+    this.awaitingProjectList.splice(0, 1); 
+    this.handleOk()                           
+
+}
+
+
+
+  onChange(selectedValue){
+    this.awaitingProjectList.push(selectedValue)
+    console.log(selectedValue)
+  }
+  
+
+
 
 }

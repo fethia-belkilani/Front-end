@@ -1,6 +1,8 @@
 <div class="container" style="width: 40%;">
+
     <div class="well">
         <div class="row">
+
             <div class="col-md-3 text-center"><button class="btn btn-primary" (click)="prev()">Prec</button></div>
             <div class="col-md-5 text-center">
                 <h3>{{today }}</h3>
@@ -10,104 +12,63 @@
     </div>
 </div>
 <br />
-<div class="container">
-    <div class="row">
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-12 py-4">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width: 8%">{{m}}</th>
-                        <th scope="col" style="width: 10%"></th>
-                        <th scope="col" style="width: 10%"></th>
-
-                        <th scope="col" style="width: 9%" *ngFor="let i  of currentWeek">{{i}}</th>
-                        <th scope="col"></th>
-                    </tr>
-                    <tr>
-                        <th scope="col"><i nz-icon nzType="edit" nzTheme="outline"></i> </th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Titre</th>
-                        <th scope="col" *ngFor="let day of weekdays">{{ day }}</th>
-                        <th scope="col">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let p of imputList">
-                        <th> <button type="button" class="btn btn-primary" (click)="openModal(editProfileModal, user)">Edit</button>
-                        </th>
-                        <td>{{ p.id }}</td>
-                        <td>{{ p.titre }}</td>
-                        <td>{{ p.lundi}}</td>
-                        <td>{{ p.mardi }}</td>
-                        <td>{{ p.mercredi }}</td>
-                        <td>{{ p.jeudi }}</td>
-                        <td>{{ p.vendredi }}</td>
-                        <td style="background-color:darkgray;">{{ p.samedi }}</td>
-                        <td style="background-color:darkgray;">{{ p.dimanche }}</td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Total</td>
-                        <td>1.5</td>
-                        <td>1.5</td>
-                        <td>1.5</td>
-                        <td>1.5</td>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+<div id="table" class="table-editable">
+    <table class="table table-bordered table-responsive-md table-striped text-center">
+        <tr>
+            <th>
+                <a (click)="showModal()">
+                    <img src="../assets/images/add.png" style="width: 30px;" />
+                </a>
+            </th>
+            <th></th>
+            <th scope="col" style="width: 9% ;" *ngFor="let i  of currentWeek">{{i}}</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Titre</th>
+            <th class="text-center " *ngFor="let day of weekdays">{{ day }}</th>
+            <th class="text-center">Total</th>
+            <th class="text-center"><i nz-icon nzType="delete" nzTheme="outline"></i></th>
+        </tr>
+        <tr *ngFor="let project of projectList; let id = index">
+            <td>
+                <span contenteditable="true">{{project.id}}</span>
+            </td>
+            <td>
+                <span contenteditable="true">{{project.name}}</span>
+            </td>
+            <td>
+                <span contenteditable="true">{{project.imputations}}</span>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <span class="table-remove">
+        <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0" (click)="remove(id)">Del</button>
+      </span>
+            </td>
+        </tr>
+    </table>
+    <div class="col-md-3 text-center"><button class="btn btn-primary">Sauvegarder</button></div>
 </div>
-<ng-template #editProfileModal let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title" id="editProfileLabel">Modifier imputation</h5>
-        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-     </button>
-    </div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Choisir un project" (nzOnCancel)="handleCancel()" (nzOnOk)="add()">
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Project A" [(ngModel)]="selectedValue" (ngModelChange)="onChange(selectedValue)">
+        <nz-option *ngFor=" let project of projectList" [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
 
-    <div class="modal-body">
-        <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
-            <div class="form-group row">
-                <label for="firstname" class="col-sm-4 col-form-label">Lundi</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" formControlName="lundi" id="lundi">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="lastname" class="col-sm-4 col-form-label">Mardi</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" formControlName="lastname" id="lastname">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="username" class="col-sm-4 col-form-label">Mercredi</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" formControlName="username" id="username">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="email" class="col-sm-4 col-form-label">Jeudi</label>
-                <div class="col-sm-8">
-                    <input type="email" class="form-control" formControlName="email" id="email">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Fermer</button>
-                <button type="submit" class="btn btn-primary">Sauvegarder</button>
-            </div>
-        </form>
-    </div>
-</ng-template>
+    </nz-select>
+
+</nz-modal>

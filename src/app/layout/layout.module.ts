@@ -15,6 +15,8 @@ import { IconsProviderModule } from '../icons-provider.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { TestComponent } from './test/test.component';
+
 
 @NgModule({
   imports: [LayoutRoutingModule, NzCalendarModule,NzSelectModule, IconsProviderModule,
@@ -22,6 +24,8 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+
+
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -32,6 +36,7 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
     RelationsComponent,
     CalendarComponent,
     HomeComponent,
+    TestComponent,
    ],
   exports: [LayoutComponent],
 
