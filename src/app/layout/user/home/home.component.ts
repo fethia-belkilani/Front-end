@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ProjectService } from './../../../_services/project.service';
+import { Project } from './../../../_models/project';
+import { Imputation } from './../../../_models/imputation';
 
 
 
@@ -14,39 +16,60 @@ import { ProjectService } from './../../../_services/project.service';
 })
 
 export class HomeComponent implements OnInit {
-  //imputations: any=[];
+  constructor(private projectService:ProjectService) { }
+  
+  intialProjectList: Array<Project> = [];
+  projectList: Array<Project> = [];
+  editField: string;
+  weekImputations:any[]
+
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
   x = moment();
-  today = moment().format("l");
+  today = moment().format("YYYY-MM-DD");
+  currentWeek = this.getWeek(this.x);
+  isVisible = false;
+  private modalService: NgbModal
+  private selectedProject;
+  private weekStartDay;
+
+  ngOnInit() {
+    this.getProjects();
+  }
 
   getWeek(dt) {
     var weekStart = dt.clone().startOf('isoWeek');
+    this.weekStartDay = weekStart;
+    console.log(this.weekStartDay)
     var weekEnd = dt.clone().endOf('isoWeek');
     var days = [];
     for (var i = 0; i <= 6; i++) {
-      days.push(moment(weekStart).add(i, 'days').format("l"));
+      days.push(moment(weekStart).add(i, 'days').format('YYYY-MM-DD')
+
+      );
     }
     return days;
   }
-  currentWeek = this.getWeek(this.x);
+ 
+
   next() {
     this.x = this.x.weekday(8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
+    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+
   }
+
   prev() {
     this.x = this.x.weekday(-8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
+    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
     
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  editField: string;
-
-    //projectList: Array<Project> = [];
-    projectList: any=[];
-    awaitingProjectList: any = [];
-    selectedProject: any=[];
+  formDay(date:Date){
+    return moment(date).format("YYYY-MM-DD")
+  }
+  ///////////////////////////////////  Table code   ////////////////////////////////////////////////////
 
 
     updateList(id: number, property: string, event: any) {
@@ -55,38 +78,55 @@ export class HomeComponent implements OnInit {
     }
 
     remove(id: any) {
-     // this.awaitingProjectList.push(this.projectList[id]);
       this.projectList.splice(id, 1);
     }
    
-
-    
+ 
     changeValue(id: number, property: string, event: any) {
       this.editField = event.target.textContent;
     }
-
-  constructor(private projectService:ProjectService) { }
-
-  ngOnInit() {
-    this.getProjects();
-  }
-
   
-
   getProjects(){
     this.projectService.getProjects().subscribe(
       res=>{
-       this.projectList=res;   },
+       this.intialProjectList= res;  
+       //console.log(res)    
+        },
       err=>{
         console.log(err);
       }
-    ) 
+    )
   }
 
-  /////////////////////////////   Modal    //////////////////
+  getImputations(projectId:number,date:string){
+   this.projectService.getWeekImputations(projectId,date).subscribe(
+      imputationData=>{
+        let weekImp: Array<any> = [];
+        this.currentWeek.forEach(day => {
+          let obj = {
+            date: null,
+            hours: null,
+            id: null,
+            state: null
+          };
+          imputationData.forEach(element => {
+            if(day === this.formDay(new Date(element.date))) {
+              obj = element;
+            }
+          });
+          weekImp.push(obj)
+        });
+       this.weekImputations = weekImp;  
+       console.log(this.weekImputations)    
+        },
+      err=>{
+        console.log(err);
+      }
+    )   
+  }
 
-  isVisible = false;
-  private modalService: NgbModal
+  /////////////////////////////   Modal code   ///////////////////////////////////////////
+ 
 
   openModal(targetModal) {
    this.modalService.open(targetModal, {
@@ -100,29 +140,22 @@ export class HomeComponent implements OnInit {
 
   handleOk(): void {
     this.isVisible = false;
+    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+
   }
 
   handleCancel(): void {
     this.isVisible = false;
   }
-  ////////////////////
+  ////////////////////////////////  List Code /////////////////////////////////////////////////////////
 
   add() {  
-    const project = this.awaitingProjectList[0];
-    this.projectList.push(project);
-    this.awaitingProjectList.splice(0, 1); 
+    this.projectList.push(this.selectedProject)
     this.handleOk()                           
-
-}
-
-
-
-  onChange(selectedValue){
-    this.awaitingProjectList.push(selectedValue)
-    console.log(selectedValue)
   }
-  
 
-
-
+  onChange(selectedProject){
+    this.selectedProject = selectedProject
+    //console.log(selectedProject)
+  }
 }
