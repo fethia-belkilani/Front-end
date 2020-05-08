@@ -9,31 +9,30 @@
 
 <br />
 <br />
-<nz-table style="width: 70%" #dynamicTable [nzScroll]="fixHeader ? { y: '240px' } : null" [nzData]="listOfData" [nzBordered]="bordered" [nzSimple]="simple" [nzLoading]="loading" [nzPaginationPosition]="position" [nzShowSizeChanger]="sizeChanger" [nzFrontPagination]="pagination"
-    [nzShowPagination]="pagination" [nzSize]="size" (nzCurrentPageDataChange)="currentPageDataChange($event)">
+<nz-table style="width: 80%; " #dynamicTable [nzScroll]="fixHeader ? { y: '140px' } : null " [nzData]="listOfData " [nzBordered]="bordered " [nzSimple]="simple " [nzLoading]="loading
+    " [nzPaginationPosition]="position " [nzShowSizeChanger]="sizeChanger " [nzFrontPagination]="pagination " [nzShowPagination]="pagination " [nzSize]="size " (nzCurrentPageDataChange)="currentPageDataChange($event) ">
     <thead>
-        <tr *ngIf="header">
-            <th nzWidth="30%">ID</th>
+        <tr *ngIf="header ">
+            <th nzWidth="30% ">ID</th>
 
 
-            <th nzWidth="30%">Nom</th>
-            <th nzWidth="20%">Validateur</th>
+            <th nzWidth="30% ">Nom</th>
+            <th nzWidth="20% ">Validateur</th>
 
-            <th nzShowCheckbox *ngIf="checkbox" [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"> </th>
+            <th nzShowCheckbox *ngIf="checkbox " [(nzChecked)]="allChecked " [nzIndeterminate]="indeterminate " (nzCheckedChange)="checkAll($event) "> </th>
         </tr>
     </thead>
     <tbody>
-        <ng-template ngFor let-data [ngForOf]="dynamicTable.data">
+        <ng-template *ngFor="let user of listOfData">
             <tr>
-                <td>{{ data.id }}</td>
-                <td>{{ data.name }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{ user.name }}</td>
                 <td></td>
-                <td nzShowCheckbox *ngIf="checkbox" [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+                <td nzShowCheckbox *ngIf=" checkbox " [(nzChecked)]="data.checked " (nzCheckedChange)="refreshStatus() "></td>
             </tr>
 
         </ng-template>
     </tbody>
 
+
 </nz-table>
-<button nz-button nzType="default">Annuler</button>
-<button nz-button nzType="primary">Sauvegarder</button>

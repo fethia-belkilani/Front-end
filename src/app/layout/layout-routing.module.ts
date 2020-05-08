@@ -12,7 +12,7 @@ import { TestComponent } from './test/test.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
-      { path: 'user', component: DashboardComponent , data: { roles: [Role.User] }},
+      { path: 'user', component: DashboardComponent , data: { roles: [Role.User ] }},
       { path: 'home', component: HomeComponent , data: { roles: [Role.User] }},
       { path: 'admin', component: CalendarComponent, data: { roles: [Role.Admin] } },
       { path: 'relations', component: RelationsComponent, data: { roles: [Role.Admin] } },

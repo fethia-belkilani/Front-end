@@ -2,3 +2,11 @@
 .cal-day-selected:hover {
     background-color: deeppink !important;
 }
+
+form {
+    max-width: 600px;
+}
+
+.register-are {
+    margin-bottom: 8px;
+}

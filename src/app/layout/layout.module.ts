@@ -16,6 +16,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
+
+
 
 
 @NgModule({
@@ -38,6 +43,7 @@ import { TestComponent } from './test/test.component';
     HomeComponent,
     TestComponent,
    ],
+   
   exports: [LayoutComponent],
 
 })

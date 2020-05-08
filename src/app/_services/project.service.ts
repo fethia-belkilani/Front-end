@@ -13,10 +13,8 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getProjects() :Observable<Array<Project>>{
-    // this.http.get<Project>(`${environment.apiUrl}//${id}`);
-    //return this.http.get<Project>(`${environment.apiUrl}/imputations`);
-    return this.http.get<Array<Project>>(`${environment.apiUrl}/projects/user/1`);
-   
+    return this.http.get<Array<Project>>(`${environment.apiUrl}/projects/user/1`); 
+
 }
 
 getWeekImputations(projectId:number,date:string):Observable<Array<Imputation>>{

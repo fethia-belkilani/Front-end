@@ -6,3 +6,11 @@ export class Project {
     imputations: Imputation[];
     
 }
+
+export class Userr {
+    id: number;
+    name: string;
+    isValidator:boolean
+  
+    
+}

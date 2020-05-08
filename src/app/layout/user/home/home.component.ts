@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { ProjectService } from './../../../_services/project.service';
 import { Project } from './../../../_models/project';
 import { Imputation } from './../../../_models/imputation';
+import { EventService } from './../../../_services/event.service';
+import { element } from 'protractor';
 
 
 
@@ -16,12 +18,13 @@ import { Imputation } from './../../../_models/imputation';
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private projectService:ProjectService) { }
+  constructor(private projectService:ProjectService, private eventService: EventService) { }
   
   intialProjectList: Array<Project> = [];
   projectList: Array<Project> = [];
   editField: string;
   weekImputations:any[]
+  weekEvents:any[]
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -56,6 +59,8 @@ export class HomeComponent implements OnInit {
     this.x = this.x.weekday(8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
     this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+    this.getEvents(this.x.format('YYYY-MM-DD'))
+
 
   }
 
@@ -63,6 +68,8 @@ export class HomeComponent implements OnInit {
     this.x = this.x.weekday(-8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
     this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+    this.getEvents(this.x.format('YYYY-MM-DD'))
+
     
   }
 
@@ -90,7 +97,7 @@ export class HomeComponent implements OnInit {
     this.projectService.getProjects().subscribe(
       res=>{
        this.intialProjectList= res;  
-       //console.log(res)    
+       console.log(res)    
         },
       err=>{
         console.log(err);
@@ -98,7 +105,7 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  getImputations(projectId:number,date:string){
+ getImputations(projectId:number,date:string){
    this.projectService.getWeekImputations(projectId,date).subscribe(
       imputationData=>{
         let weekImp: Array<any> = [];
@@ -116,14 +123,42 @@ export class HomeComponent implements OnInit {
           });
           weekImp.push(obj)
         });
-       this.weekImputations = weekImp;  
-       console.log(this.weekImputations)    
+       this.weekImputations=weekImp
+      // console.log(this.weekImputations)    
         },
       err=>{
         console.log(err);
       }
     )   
   }
+
+  getEvents(date:string){
+    this.eventService.getWeekEvents(date).subscribe(
+       eventData=>{
+         let weekEv: Array<any> = [];
+         this.currentWeek.forEach(day => {
+           let obj = {
+             id:null,
+             title: null,
+             start: null,
+             end: null,
+           };
+           eventData.forEach(element => {
+             if(day === this.formDay(new Date(element.start))) {
+               obj = element;
+             }
+           });
+           weekEv.push(obj)
+         });
+        this.weekEvents = weekEv;  
+        console.log(this.weekEvents)    
+         },
+       err=>{
+         console.log(err);
+       }
+     )   
+   }
+ 
 
   /////////////////////////////   Modal code   ///////////////////////////////////////////
  
@@ -141,6 +176,7 @@ export class HomeComponent implements OnInit {
   handleOk(): void {
     this.isVisible = false;
     this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+    this.getEvents(this.x.format('YYYY-MM-DD'))
 
   }
 
@@ -150,8 +186,12 @@ export class HomeComponent implements OnInit {
   ////////////////////////////////  List Code /////////////////////////////////////////////////////////
 
   add() {  
-    this.projectList.push(this.selectedProject)
-    this.handleOk()                           
+    if(!(this.projectList.find(project=>project.id===this.selectedProject.id)))
+    {this.projectList.push(this.selectedProject)
+    this.handleOk()   }    
+    else{
+      alert("Ce project existe déja")
+    }                    
   }
 
   onChange(selectedProject){

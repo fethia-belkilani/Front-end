@@ -3,6 +3,9 @@ import {
 } from '@angular/core';
 // @ts-ignore
 import { ItemData } from '../../../_models/ItemData';
+import { UserService } from './../../../_services/user.service';
+import { Subject } from 'rxjs';
+import { Userr } from 'src/app/_models/project';
 
 @Component({
   selector: 'app-roles',
@@ -11,10 +14,11 @@ import { ItemData } from '../../../_models/ItemData';
 })
 export class RolesComponent implements OnInit {
 
-  constructor() {
+  constructor(private userServise: UserService) {
   }
+  listOfData: Array<Userr> = [];
 
-  listOfData: ItemData[] = [];
+
   displayData: ItemData[] = [];
   bordered = false;
   loading = false;
@@ -54,14 +58,7 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (let i = 1; i <= 10; i++) {
-      this.listOfData.push({
-        name: 'John Brown',
-        id: `${i}2`,
-        address: `New York No. ${i} Lake Park`,
-        checked: false,
-      });
-    }
+    this.getAllUsers()
   }
 
   noResultChange(status: boolean): void {
@@ -70,4 +67,31 @@ export class RolesComponent implements OnInit {
       this.ngOnInit();
     }
   }
+
+
+  getAllUsers(){
+    let myusers: Array<any> = [];
+
+    this.userServise.getAll().subscribe(
+
+      res=>{res.forEach(user=>{
+        myusers.push(user)
+          
+      })
+       
+   
+        },
+      err=>{
+        console.log("sorry no user",err);
+      }
+    )
+   this.listOfData=myusers
+   console.log("my",myusers)
+   console.log("this",this.listOfData)
+
+  }
+ 
+
+
+
 }
