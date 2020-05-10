@@ -7,10 +7,3 @@ export class Project {
     
 }
 
-export class Userr {
-    id: number;
-    name: string;
-    isValidator:boolean
-  
-    
-}

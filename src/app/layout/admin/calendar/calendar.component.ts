@@ -95,7 +95,7 @@ createEvent(e){
   this.refresh.next();
 }
 
-updateEvents(e:Event){
+updateListEvents(e:Event){
   var obj: Array<Event> = [];
   var event: Event = {
     id: e.id,
@@ -152,7 +152,7 @@ submitForm(value: { title: string; start: Date; end:Date}): void {
   };
   console.log("event from form: ",e)
   this.createEvent(e)
-  this.updateEvents(e)
+  this.updateListEvents(e)
   this.handleOk()                           
 
 }

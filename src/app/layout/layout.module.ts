@@ -4,7 +4,7 @@ import { LayoutComponent } from './layout.component';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule, NzSelectModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzSelectModule, NzTableModule } from 'ng-zorro-antd';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { RolesComponent } from './admin/roles/roles.component';
@@ -18,7 +18,9 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { TableComponent } from '../table/table.component';
 registerLocaleData(localeFr);
+
 
 
 
@@ -29,6 +31,7 @@ registerLocaleData(localeFr);
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    NzTableModule,
 
 
     CalendarModule.forRoot({
@@ -42,6 +45,7 @@ registerLocaleData(localeFr);
     CalendarComponent,
     HomeComponent,
     TestComponent,
+    TableComponent,
    ],
    
   exports: [LayoutComponent],

@@ -8,6 +8,7 @@ import { HomeComponent } from './user/home/home.component';
 import { Role } from './../_models';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
+import { TableComponent } from '../table/table.component'
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'calendar', component: CalendarComponent, data: { roles: [Role.Admin] } },
       { path: 'roles', component: RolesComponent, data: { roles: [Role.Admin] } },
       { path: 'test', component: TestComponent,  },
+     {path:'table',component:TableComponent,}
 
     ]
   },
@@ -26,6 +28,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+exports: [RouterModule]
 })
 export class LayoutRoutingModule { }

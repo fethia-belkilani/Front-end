@@ -1,38 +1,19 @@
-<nz-input-group style="width: 40%" nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input placeholder="Recherche" />
-</nz-input-group>
-<ng-template #suffixIconButton>
-    <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
-</ng-template>
-
-
-
-<br />
-<br />
-<nz-table style="width: 80%; " #dynamicTable [nzScroll]="fixHeader ? { y: '140px' } : null " [nzData]="listOfData " [nzBordered]="bordered " [nzSimple]="simple " [nzLoading]="loading
-    " [nzPaginationPosition]="position " [nzShowSizeChanger]="sizeChanger " [nzFrontPagination]="pagination " [nzShowPagination]="pagination " [nzSize]="size " (nzCurrentPageDataChange)="currentPageDataChange($event) ">
+<nz-table style=" width: 80%; ">
     <thead>
-        <tr *ngIf="header ">
-            <th nzWidth="30% ">ID</th>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Validateur</th>
 
-
-            <th nzWidth="30% ">Nom</th>
-            <th nzWidth="20% ">Validateur</th>
-
-            <th nzShowCheckbox *ngIf="checkbox " [(nzChecked)]="allChecked " [nzIndeterminate]="indeterminate " (nzCheckedChange)="checkAll($event) "> </th>
         </tr>
     </thead>
     <tbody>
-        <ng-template *ngFor="let user of listOfData">
-            <tr>
-                <td>{{ user.role }}</td>
-                <td>{{ user.name }}</td>
-                <td></td>
-                <td nzShowCheckbox *ngIf=" checkbox " [(nzChecked)]="data.checked " (nzCheckedChange)="refreshStatus() "></td>
-            </tr>
+        <tr *ngFor=" let user of mylist ">
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(mylist) " (change)="onFilterChange($event,user.id,user.name,user.role,user.isValidator) "></td>
 
-        </ng-template>
+        </tr>
+
     </tbody>
-
-
 </nz-table>

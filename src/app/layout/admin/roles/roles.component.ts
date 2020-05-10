@@ -1,11 +1,14 @@
-import {
-  Component, OnInit, ViewEncapsulation
-} from '@angular/core';
-// @ts-ignore
-import { ItemData } from '../../../_models/ItemData';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from './../../../_services/user.service';
-import { Subject } from 'rxjs';
-import { Userr } from 'src/app/_models/project';
+import { User } from 'src/app/_models/user';
+import { element } from 'protractor';
+interface ItemData {
+  id: number;
+  name: string;
+  age: number;
+  address: string;
+}
+
 
 @Component({
   selector: 'app-roles',
@@ -13,85 +16,62 @@ import { Userr } from 'src/app/_models/project';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-
-  constructor(private userServise: UserService) {
-  }
-  listOfData: Array<Userr> = [];
-
-
-  displayData: ItemData[] = [];
-  bordered = false;
-  loading = false;
-  sizeChanger = false;
-  pagination = true;
-  header = true;
-  title = true;
-  footer = true;
-  fixHeader = false;
-  size = 'small';
-  expandable = true;
-  checkbox = true;
-  allChecked = false;
-  indeterminate = false;
-  simple = false;
-  noResult = false;
-  position = 'bottom';
-
-  currentPageDataChange($event: ItemData[]): void {
-    this.displayData = $event;
-    this.refreshStatus();
-  }
-
-  refreshStatus(): void {
-    const validData = this.displayData;
-    const allChecked = validData.length > 0 && validData.every(value => value.checked === true);
-    const allUnChecked = validData.every(value => !value.checked);
-    this.allChecked = allChecked;
-    this.indeterminate = !allChecked && !allUnChecked;
-  }
-
-  checkAll(value: boolean): void {
-    this.displayData.forEach(data => {
-      data.checked = value;
-    });
-    this.refreshStatus();
+ 
+  constructor(private userService:UserService) {
   }
 
   ngOnInit(): void {
     this.getAllUsers()
-  }
+    
+  
+   }
 
-  noResultChange(status: boolean): void {
-    this.listOfData = [];
-    if (!status) {
-      this.ngOnInit();
-    }
-  }
+  mylist: User[] =[]
 
 
   getAllUsers(){
     let myusers: Array<any> = [];
-
-    this.userServise.getAll().subscribe(
-
+    this.userService.getAll().subscribe(
       res=>{res.forEach(user=>{
-        myusers.push(user)
-          
-      })
-       
-   
+        myusers.push(user) 
+      })   
         },
+
       err=>{
-        console.log("sorry no user",err);
+        console.log(err);
       }
     )
-   this.listOfData=myusers
+   this.mylist=myusers
    console.log("my",myusers)
-   console.log("this",this.listOfData)
+   console.log("this",this.mylist)
 
   }
- 
 
+  UpdateUser(u){
+    this.userService.update(u)
+        .subscribe(
+          res => {
+            console.log(res);
+            console.log('okkkk')
+          },
+          err => console.log(err)
+        )
+  }
 
+  onFilterChange($event,id,name,role,state){
+    console.log("you changed the user",name)
+    var userToUpdate: User = {
+      id:id,
+      name:name,
+      role: role,
+      isValidator:state
+    }
+    this.UpdateUser(userToUpdate)
 
+  }
+
+  log(value: object[]): void {
+    console.log(value);
+    console.log("liste:  ",this.mylist)
+  }
 }
