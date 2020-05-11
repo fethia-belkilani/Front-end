@@ -18,7 +18,6 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { TableComponent } from '../table/table.component';
 registerLocaleData(localeFr);
 
 
@@ -45,7 +44,6 @@ registerLocaleData(localeFr);
     CalendarComponent,
     HomeComponent,
     TestComponent,
-    TableComponent,
    ],
    
   exports: [LayoutComponent],

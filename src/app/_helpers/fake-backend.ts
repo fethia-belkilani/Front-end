@@ -6,8 +6,8 @@ import { User } from '../_models';
 import { Role } from '../_models';
 
 const users: User[] = [
-    { id: 1, username: 'admin', password: 'admin', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-    { id: 2, username: 'user', password: 'user', firstName: 'Normal', lastName: 'User', role: Role.User }
+    { id: 1, username: 'admin', password: 'admin', role: Role.Admin },
+    { id: 2, username: 'user', password: 'user',role: Role.User }
 ];
 
 @Injectable()
@@ -46,8 +46,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok({
                 id: user.id,
                 username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
                 role: user.role,
                 token: `fake-jwt-token.${user.id}`
             });

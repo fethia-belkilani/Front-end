@@ -18,10 +18,11 @@
         </h4>
     </div>
     <div class="col-md-4">
-        <h5>Créer un évennement</h5>
+        <h5>Evènnement</h5>
         <a (click)="showModal()">
             <img src="../assets/images/add.png" style="width: 30px; margin-left: 10px;" />
         </a>
+
     </div>
 </div>
 <br />
@@ -29,46 +30,34 @@
 <div [ngSwitch]="view">
     <mwl-calendar-month-view [events]="events" [refresh]="refresh" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (eventClicked)="eventClicked($event)">
     </mwl-calendar-month-view>
-
 </div>
 <nz-modal [(nzVisible)]="isVisible " nzTitle="Créer un évennement " (nzOnCancel)="handleCancel() ">
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value) ">
         <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">Title</nz-form-label>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">Titre</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid">
                 <input nz-input formControlName="title" id="title" />
             </nz-form-control>
         </nz-form-item>
-
         <nz-form-item>
             <nz-form-label [nzSm]="8 " [nzXs]="24 " nzRequired>Date début</nz-form-label>
             <nz-form-control [nzSm]="16 " [nzXs]="24 ">
                 <nz-date-picker formControlName="start"></nz-date-picker>
             </nz-form-control>
         </nz-form-item>
-
-
         <nz-form-item>
             <nz-form-label [nzSm]="8 " [nzXs]="24 " nzRequired>Date fin</nz-form-label>
             <nz-form-control [nzSm]="16 " [nzXs]="24 ">
                 <nz-date-picker formControlName="end"></nz-date-picker>
             </nz-form-control>
         </nz-form-item>
-
-
-
         <nz-form-item nz-row class="register-area">
             <nz-form-control [nzSpan]="14" [nzOffset]="6">
                 <button nz-button nzType="primary">Créer</button>
             </nz-form-control>
         </nz-form-item>
-
-
-
     </form>
     <div *nzModalFooter>
 
     </div>
-
-
 </nz-modal>

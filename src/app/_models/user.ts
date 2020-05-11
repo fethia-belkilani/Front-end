@@ -2,8 +2,10 @@
 
 export class User {
     id: number;
-    name: string;
+   username: string;
     isValidator:boolean;
+    /////for fake backend
+    password: string;
     role: Role;
     token?: string;
 }

@@ -1,17 +1,12 @@
 import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CalendarEvent, CalendarView, MOMENT } from 'angular-calendar';
-import { colors } from './demo-utils/colors'
-import { CalendarDateFormatter, CalendarEventAction, DAYS_OF_WEEK } from 'angular-calendar';
-import { CustomDateFormatter } from './custom-date-formatter.provider';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { CalendarDateFormatter, DAYS_OF_WEEK } from 'angular-calendar';
 import { EventService } from './../../../_services/event.service';
-import { Subject, Observable } from 'rxjs';
+import { Subject} from 'rxjs';
 import { Event } from 'src/app/_models/event';
-import * as moment from 'moment';
-import { isThursday } from 'date-fns';
-import { map } from 'rxjs/operators';
-import { ɵWebAnimationsPlayer } from '@angular/animations/browser';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 
 
@@ -30,7 +25,8 @@ import { ɵWebAnimationsPlayer } from '@angular/animations/browser';
   ]
 })
 export class CalendarComponent implements OnInit {
-  constructor(private fb: FormBuilder, private modalService: NgbModal, private eventService: EventService) {}
+  constructor(private fb: FormBuilder, private modalService: NgbModal, private eventService: EventService,private modal: NzModalService
+    ) {}
 
   locale: string = 'fr';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
@@ -42,22 +38,20 @@ export class CalendarComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   isVisible=false
 
+
+
   setView(view: CalendarView) {
     this.view = view;
   }
- 
 
 
 
   ngOnInit() { 
-    //this.createEvent(this.e)
     this.validForm()
     this.fetchEvents()
-    console.log('final list events:',this.events)
   }
 
-  
-  
+   
 
 createEvent(e){
   this.eventService.createEvent(e)
@@ -65,6 +59,16 @@ createEvent(e){
         res => {
           console.log(res);
           console.log('okkkk')
+        },
+        err => console.log(err)
+      )
+}
+deleteEvent(id){
+  this.eventService.deleteEvent(id)
+      .subscribe(
+        res => {
+          console.log(res);
+          console.log('deleted ')
         },
         err => console.log(err)
       )
@@ -107,19 +111,20 @@ updateListEvents(e:Event){
   this.events.push(obj[0])
   this.refresh.next();
 }
+updateDelete(id:number){
+  var event=this.events.find(e=>e.id==id)
+  const index= this.events.indexOf(event)
+  this.events.splice(index, 1);
+  this.refresh.next();
+}
 
 eventClicked({ event }: { event: CalendarEvent }): void {
-  console.log('Event clickedddddddd', event);
+  const a= Number(event.id)
+  this.showDeleteConfirm(a,event.title)
 }
 
 
-////////////////////////////////////////////////modal
-openModal(targetModal) {
-  this.modalService.open(targetModal, {
-   centered: true,
-   backdrop: 'static'
-  });
- }
+////////////////////////////////////////////////creattion modal
  showModal(): void {
    this.isVisible = true;
  }
@@ -132,7 +137,7 @@ openModal(targetModal) {
  handleCancel(): void {
    this.isVisible = false;
  }
- ////////////////////////////////////////////////////////form
+ //////////////////////////////////////////////////////// creation form
  validateForm: FormGroup;
 
  validForm(): void {
@@ -142,7 +147,6 @@ openModal(targetModal) {
     end: [null],
   });
 }
-
 submitForm(value: { title: string; start: Date; end:Date}): void {
   const  e: Event = {
     id:null,
@@ -156,12 +160,22 @@ submitForm(value: { title: string; start: Date; end:Date}): void {
   this.handleOk()                           
 
 }
+///////////////////////////Delete
+
+showDeleteConfirm( id:number,title: string): void {
+  this.modal.confirm({
+    nzTitle: 'Voulez-vous vraiment supprimer?',
+    nzContent: '<b>'+  title +'</b>',
+    nzOkText: 'Supprimer',
+    nzOkType: 'danger',
+    nzOnOk: () => {
+    this.deleteEvent(id)
+    this.updateDelete  (id)
+
+  },
+    nzCancelText: 'Annuler'  });
+}
 
 
- 
- 
- 
-
- 
   
 }

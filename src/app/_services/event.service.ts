@@ -24,5 +24,9 @@ createEvent(event: Event): Observable<Event> {
   return this.http.post<Event>(`${environment.apiUrl}/events/`,event);
 }
 
+deleteEvent(id: number): Observable<Event> {
+  return this.http.delete<Event>(`${environment.apiUrl}/events/${id}`);
+}
+
 
 }
