@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ProjectService } from './../../../_services/project.service';
 import { Project } from './../../../_models/project';
-import { Imputation } from './../../../_models/imputation';
 import { EventService } from './../../../_services/event.service';
-import { element } from 'protractor';
+import { NzModalService } from 'ng-zorro-antd/modal';
+
 
 
 
@@ -18,12 +17,13 @@ import { element } from 'protractor';
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private projectService:ProjectService, private eventService: EventService) { }
+  constructor(private projectService:ProjectService, private eventService: EventService,private modal:NzModalService) { }
   
   intialProjectList: Array<Project> = [];
   projectList: Array<Project> = [];
   editField: string;
   weekImputations:any[]
+  map=new Map()
   weekEvents:any[]
 
 
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   getWeek(dt) {
     var weekStart = dt.clone().startOf('isoWeek');
     this.weekStartDay = weekStart;
-    console.log(this.weekStartDay)
+    //console.log(this.weekStartDay)
     var weekEnd = dt.clone().endOf('isoWeek');
     var days = [];
     for (var i = 0; i <= 6; i++) {
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
     this.projectService.getProjects().subscribe(
       res=>{
        this.intialProjectList= res;  
-       console.log(res)    
+       //console.log(res)    
         },
       err=>{
         console.log(err);
@@ -123,7 +123,9 @@ export class HomeComponent implements OnInit {
           });
           weekImp.push(obj)
         });
-       this.weekImputations=weekImp
+      // this.weekImputations=weekImp
+      this.map.set(projectId,weekImp)
+      console.log(this.map)
       // console.log(this.weekImputations)    
         },
       err=>{
@@ -151,7 +153,7 @@ export class HomeComponent implements OnInit {
            weekEv.push(obj)
          });
         this.weekEvents = weekEv;  
-        console.log(this.weekEvents)    
+       // console.log(this.weekEvents)    
          },
        err=>{
          console.log(err);
@@ -190,12 +192,21 @@ export class HomeComponent implements OnInit {
     {this.projectList.push(this.selectedProject)
     this.handleOk()   }    
     else{
-      alert("Ce project existe déja")
+      this.warning()
     }                    
   }
 
   onChange(selectedProject){
     this.selectedProject = selectedProject
     //console.log(selectedProject)
+  }
+
+
+
+  warning(): void {
+    this.modal.warning({
+      nzTitle: 'Warning',
+      nzContent: 'Ce projet est déja sélectionné'
+    });
   }
 }
