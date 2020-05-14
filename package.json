@@ -24,6 +24,7 @@
     "@angular/router": "~8.2.14",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
+    "@service-work/is-loading": "^3.0.3",
     "@types/chart.js": "^2.9.19",
     "angular-calendar": "^0.28.5",
     "animate.css": "^3.7.2",

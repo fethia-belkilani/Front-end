@@ -18,10 +18,8 @@
         </h4>
     </div>
     <div class="col-md-4">
-        <h5>Evènnement</h5>
-        <a (click)="showModal()">
-            <img src="../assets/images/add.png" style="width: 30px; margin-left: 10px;" />
-        </a>
+        <button (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="plus"></i>Evènnement</button>
+
 
     </div>
 </div>
@@ -31,7 +29,7 @@
     <mwl-calendar-month-view [events]="events" [refresh]="refresh" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (eventClicked)="eventClicked($event)">
     </mwl-calendar-month-view>
 </div>
-<nz-modal [(nzVisible)]="isVisible " nzTitle="Créer un évennement " (nzOnCancel)="handleCancel() ">
+<nz-modal [(nzVisible)]="isVisible " nzTitle="Créer un évènnement " (nzOnCancel)="handleCancel() ">
     <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value) ">
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title">Titre</nz-form-label>
@@ -46,7 +44,7 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-            <nz-form-label [nzSm]="8 " [nzXs]="24 " nzRequired>Date fin</nz-form-label>
+            <nz-form-label [nzSm]="8 " [nzXs]="24 ">Date fin</nz-form-label>
             <nz-form-control [nzSm]="16 " [nzXs]="24 ">
                 <nz-date-picker formControlName="end"></nz-date-picker>
             </nz-form-control>

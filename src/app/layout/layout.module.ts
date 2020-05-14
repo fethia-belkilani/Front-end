@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
-import { NzListModule } from 'ng-zorro-antd/list';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule, NzSelectModule, NzTableModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzSelectModule, NzTableModule, NzListModule } from 'ng-zorro-antd';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { RolesComponent } from './admin/roles/roles.component';
@@ -31,7 +30,6 @@ registerLocaleData(localeFr);
     FormsModule,
     ReactiveFormsModule,
     NzTableModule,
-
 
     CalendarModule.forRoot({
       provide: DateAdapter,

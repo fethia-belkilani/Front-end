@@ -1,20 +1,37 @@
 <div id="container">
-    <div id="side">
-        <p>Collaborateur: <b>{{ selectedValue?.label }}</b> </p>
-        <br />
-        <nz-select [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="Choisir collaborateur">
-            <nz-option *ngFor="let option of optionList" [nzValue]="option" [nzLabel]="option.label"></nz-option>
+
+    <div style="margin-bottom: 30px;">
+        <h4 nz-typography>Gérer les utilisateurs</h4>
+        <span nz-typography>Affecter des collaborateurs à un validateur,vous pouvez également supprimer une relation existante.</span>
+
+    </div>
+
+</div>
+
+<div id="container">
+
+
+    <div class="side">
+        <span nz-typography><strong>Validateur:</strong></span>
+        <br>
+
+
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Choisir un valiateur " [(ngModel)]="selectedValidator" (ngModelChange)="onChangeVal(selectedValidator) ">
+            <nz-option *ngFor=" let validator of validatorsList " [nzValue]="validator" [nzLabel]="validator.name"></nz-option>
         </nz-select>
     </div>
-    <div id="side">
-        <p>Validateur(s): </p>
-        <br />
-        <nz-select nzMode="multiple" nzAllowClear nzPlaceHolder="Choisir validateur">
-            <nz-option *ngFor="let option of listOfOption" [nzValue]="option" [nzLabel]="option"></nz-option>
+    <div class="side ">
+        <span nz-typography><strong>Collaborateur(s):</strong></span>
+        <br>
+        <nz-select nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Choisir des collaborateurs " [(ngModel)]="selectedCollaboratorsList" (ngModelChange)="onChangeCol(selectedCollaboratorsList) ">
+            <nz-option *ngFor=" let collaborator of collaboratorsList" [nzValue]="collaborator" [nzLabel]="collaborator.name"></nz-option>
         </nz-select>
+
+
     </div>
+
 </div>
 <br>
 <br>
-<button nz-button nzType="default">Annuler</button>
-<button nz-button nzType="primary">Sauvegarder</button>
+<button (click)="cancel() " nz-button nzType="default"> Annuler</button>
+<button (click)="addCollabs()" nz-button nzType="primary ">Savegarder</button>

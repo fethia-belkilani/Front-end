@@ -24,6 +24,11 @@ update(user:User){
   return this.http.put(`${environment.apiUrl}/users/`,user);
 
 }
+
+addCollabs(id:number,collabs:User[])
+{
+  return this.http.post(`${environment.apiUrl}/users/${id}`,collabs);
+}
    
-  
+
 }

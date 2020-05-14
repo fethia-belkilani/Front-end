@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './../../../_services/user.service';
 import { User } from 'src/app/_models/user';
 import { element } from 'protractor';
+import { Validators } from '@angular/forms';
 interface ItemData {
   id: number;
   name: string;
@@ -26,7 +27,7 @@ export class RolesComponent implements OnInit {
   
    }
 
-  mylist: User[] =[]
+  usersList: User[] =[]
 
 
   getAllUsers(){
@@ -41,9 +42,9 @@ export class RolesComponent implements OnInit {
         console.log(err);
       }
     )
-   this.mylist=myusers
+   this.usersList=myusers
    console.log("my",myusers)
-   console.log("this",this.mylist)
+   console.log("this",this.usersList)
 
   }
 
@@ -51,20 +52,23 @@ export class RolesComponent implements OnInit {
     this.userService.update(u)
         .subscribe(
           res => {
-            console.log(res);
+            console.log("res:", res);
             console.log('okkkk')
           },
           err => console.log(err)
         )
   }
 
-  onFilterChange($event,id,name,role,state){
+  onFilterChange($event,id,name,role,state,validators,collaborators){
     console.log("you changed the user",name)
     var userToUpdate: User = {
-      id:id,
+      id:id, 
       name:name,
-      role: role,
-      isValidator:state
+      isValidator:state,
+      collaborators:collaborators,
+      validators:validators
+
+
     }
     this.UpdateUser(userToUpdate)
 
@@ -72,6 +76,7 @@ export class RolesComponent implements OnInit {
 
   log(value: object[]): void {
     console.log(value);
-    console.log("liste:  ",this.mylist)
+    console.log("liste:  ",this.usersList)
   }
+
 }

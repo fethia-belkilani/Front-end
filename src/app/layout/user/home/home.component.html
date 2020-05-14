@@ -2,14 +2,14 @@
 
 
     <div class="well">
-        <div class="row">
-            <div class="col-md-2 text-center"> <button nz-button nzType="primary" [nzSize]="size" (click)="prev()"><i nz-icon nzType="double-left" nzTheme="outline"></i></button>
+        <div class="center">
+            <div class="col-sm-2 text-center"> <button nz-button nzType="primary" [nzSize]="size" (click)="prev()"><i nz-icon nzType="double-left" nzTheme="outline"></i></button>
 
             </div>
-            <div class="col-md-6 text-center">
-                <h3>{{today }}</h3>
+            <div class="col-md-5 text-center">
+                <h5>{{today }}</h5>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-sm-2 text-center">
                 <button nz-button nzType="primary" [nzSize]="size" (click)="next()"><i nz-icon nzType="double-right" nzTheme="outline"></i></button>
 
             </div>
@@ -19,23 +19,25 @@
     </div>
 </div>
 <br />
-<div id="table" class="table-editable">
+<div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <tr>
-            <th colspan="2">
+            <th colspan="2" style="width: 25%;">
                 Projets
                 <a (click)="showModal()">
-                    <img src="../assets/images/add.png" style="width: 30px; margin-left: 10px;" />
+                    <img src="../assets/images/add.png" style="width: 27px; margin-left: 10px;" />
                 </a>
             </th>
-            <th scope="col" style="width: 11% ;" *ngFor="let date  of currentWeek">{{date}}</th>
-            <th></th>
+            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek">{{formSimple(date)}}</th>
+            <th colspan="2">Total/semaine</th>
         </tr>
         <tr>
             <th class="text-center">ID</th>
             <th class="text-center">Titre</th>
-            <th class="text-center " *ngFor="let day of weekdays">{{ day }}</th>
+            <th class="text-center " *ngFor="let day of weekdays">{{ day }}
+            </th>
             <th class="text-center">Total</th>
+            <th>Valider</th>
         </tr>
         <tr *ngFor="let project of projectList; let i = index">
             <td>
@@ -49,22 +51,26 @@
             <ng-container *ngFor="let item of map | keyvalue">
                 <ng-container *ngIf="item.key== project.id">
 
-                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index"> {{a}}{{imp.hours}}</td>
+                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index"> {{a}}{{imp.hours}}
+
+                    </td>
                 </ng-container>
             </ng-container>
-
-            <td>vv</td>
+            <td></td>
+            <td>
+                <a><img src="../assets/images/valid.png" style="width: 27px; margin-left: 10px;" /></a>
+            </td>
         </tr>
         <tr>
-            <td colspan=" 2 ">
-                <strong>Total/jour</strong></td>
+            <th colspan=" 2 ">
+                Total/jour</th>
         </tr>
     </table>
 
 
 </div>
 <nz-modal [(nzVisible)]="isVisible " nzTitle="Choisir un project " (nzOnCancel)="handleCancel() " (nzOnOk)="add() ">
-    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Project A " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Recherche" [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
         <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
 
     </nz-select>

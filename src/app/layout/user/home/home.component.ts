@@ -17,7 +17,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private projectService:ProjectService, private eventService: EventService,private modal:NzModalService) { }
+  constructor(private projectService:ProjectService, private eventService: EventService,
+    private modal:NzModalService) { }
   
   intialProjectList: Array<Project> = [];
   projectList: Array<Project> = [];
@@ -75,6 +76,10 @@ export class HomeComponent implements OnInit {
 
   formDay(date:Date){
     return moment(date).format("YYYY-MM-DD")
+  }
+
+  formSimple(date:Date){
+    return moment(date).format("MM-DD")
   }
   ///////////////////////////////////  Table code   ////////////////////////////////////////////////////
 

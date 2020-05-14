@@ -8,10 +8,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor=" let user of mylist ">
+        <tr *ngFor=" let user of usersList ">
             <td>{{user.id}}</td>
             <td>{{user.name}}</td>
-            <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(mylist) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator) "></td>
+            <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator,user.validators,user.collaborators) "></td>
 
         </tr>
 

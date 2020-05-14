@@ -6,8 +6,8 @@ import { User } from '../_models';
 import { Role } from '../_models';
 
 const users: User[] = [
-    { id: 1, username: 'admin', password: 'admin', role: Role.Admin },
-    { id: 2, username: 'user', password: 'user',role: Role.User }
+    { id: 1, username: 'admin', password: 'admin', role: Role.Admin,name:"", isValidator:false },
+    { id: 2, username: 'user', password: 'user',role: Role.User,name:"", isValidator:false  }
 ];
 
 @Injectable()

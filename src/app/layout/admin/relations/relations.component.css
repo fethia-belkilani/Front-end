@@ -3,9 +3,9 @@ nz-select {
     margin-right: 50px;
 }
 
-#side {
+.side {
     padding-right: 100px;
-    width: 30%;
+    width: 40%;
 }
 
 #container {
