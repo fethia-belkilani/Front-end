@@ -1,0 +1,46 @@
+<div id="table" class="table-editable center ">
+    <table class="table table-bordered table-responsive-md table-striped text-center">
+        <thead>
+            <th>Collaborateur</th>
+            <th>ID projet</th>
+            <th>Titre projet</th>
+            <th class="text-center " *ngFor="let day of weekdays">
+                <span nz-typography>{{ day }}</span>
+
+            </th>
+            <th>Valider</th>
+
+        </thead>
+
+
+        <tr *ngFor="let project of projectList; let i = index">
+            <td>
+                <span nz-typography>{{project.id}}</span>
+            </td>
+            <td>
+                <span nz-typography>{{project.name}}</span>
+            </td>
+
+
+            <ng-container *ngFor="let item of map | keyvalue">
+                <ng-container *ngIf="item.key== project.id">
+
+                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
+                        <span nz-typography>{{imp.hours}}</span>
+
+
+                    </td>
+                </ng-container>
+            </ng-container>
+            <td></td>
+            <td>
+                <a title="click here"><i nz-icon nzType="check-circle" nzTheme="outline" style="font-size: 24px"></i></a>
+            </td>
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
+
+
+</div>

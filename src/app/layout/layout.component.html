@@ -37,6 +37,15 @@
                     </li>
                 </ul>
             </li>
+
+            <li nz-submenu nzOpen nzTitle="Collaborateurs" nzIcon="user">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/validation">Validations</a>
+                    </li>
+
+                </ul>
+            </li>
         </ul>
     </nz-sider>
     <nz-layout>
@@ -49,17 +58,40 @@
                     <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
                 </span>
 
-                <span class="he">
-                    <i nz-icon nzType="user" nzTheme="outline" style="padding-right: 20px;"></i> 
+                <span>
 
-                    <button  nz-button nzType="default" (click)="logout()" style="padding-right:20px;">  <i nz-icon nzType="logout" nzTheme="outline"></i> Logout</button>
-
-
-                    
-                    
+                    <nz-input-group [nzSuffix]="suffixIconSearch" style="width: 20%;">
+                        <input type="text" nz-input placeholder="Recherche" />
+                      </nz-input-group>
+                      <ng-template #suffixIconSearch>
+                        <i nz-icon nzType="search"></i>
+                      </ng-template>
 
 
                 </span>
+
+
+
+
+
+                <span class="he">
+                  
+                    <ul  nz-menu nzMode="inline" >
+                        <li nz-submenu nzTitle="Fethia Belkilani" nzIcon="user" >
+                            <ul>
+                                
+                                        <li nz-menu-item nzSelected >informations </li>
+                                        <li nz-menu-item (click)="logout()">Déconnexion</li>
+                                    
+                                
+                            </ul>
+                        </li>
+                    </ul>
+
+
+
+                </span>
+
 
             </div>
         </nz-header>

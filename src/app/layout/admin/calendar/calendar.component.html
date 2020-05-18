@@ -25,7 +25,7 @@
 </div>
 <br />
 
-<div [ngSwitch]="view">
+<div [ngSwitch]="view" style="width: 90%; margin-left: 5%;">
     <mwl-calendar-month-view [events]="events" [refresh]="refresh" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (eventClicked)="eventClicked($event)">
     </mwl-calendar-month-view>
 </div>

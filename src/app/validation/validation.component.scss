@@ -1,0 +1,31 @@
+@media all and (min-width: 768px) {
+    tr {
+        td {
+            vertical-align: middle !important;
+        }
+        span {
+            &:not([class]) {
+                padding: 1rem 1rem;
+            }
+        }
+    }
+    nz-select {
+        width: 300px;
+    }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+}
+
+th {
+    font-size: 14px;
+}
+
+td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}

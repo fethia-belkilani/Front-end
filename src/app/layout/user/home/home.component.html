@@ -7,7 +7,7 @@
 
             </div>
             <div class="col-md-5 text-center">
-                <h5>{{today }}</h5>
+                <h5>{{formToday(today) }}</h5>
             </div>
             <div class="col-sm-2 text-center">
                 <button nz-button nzType="primary" [nzSize]="size" (click)="next()"><i nz-icon nzType="double-right" nzTheme="outline"></i></button>
@@ -21,56 +21,65 @@
 <br />
 <div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped text-center">
-        <tr>
+        <thead>
             <th colspan="2" style="width: 25%;">
                 Projets
                 <a (click)="showModal()">
                     <img src="../assets/images/add.png" style="width: 27px; margin-left: 10px;" />
                 </a>
             </th>
-            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek">{{formSimple(date)}}</th>
+            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek"> <span nz-typography>{{formWeek(date)}}</span></th>
             <th colspan="2">Total/semaine</th>
-        </tr>
+        </thead>
         <tr>
             <th class="text-center">ID</th>
             <th class="text-center">Titre</th>
-            <th class="text-center " *ngFor="let day of weekdays">{{ day }}
+            <th class="text-center " *ngFor="let day of weekdays">
+                <span nz-typography>{{ day }}</span>
             </th>
             <th class="text-center">Total</th>
             <th>Valider</th>
         </tr>
         <tr *ngFor="let project of projectList; let i = index">
             <td>
-                <span>{{project.id}}</span>
+                <span nz-typography>{{project.id}}</span>
             </td>
             <td>
-                <span>{{project.name}}</span>
+                <span nz-typography>{{project.name}}</span>
             </td>
-
 
             <ng-container *ngFor="let item of map | keyvalue">
                 <ng-container *ngIf="item.key== project.id">
-
-                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index"> {{a}}{{imp.hours}}
-
+                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
+                        <span nz-typography>{{imp.hours}}</span>
                     </td>
                 </ng-container>
             </ng-container>
+
+
+
             <td></td>
             <td>
-                <a><img src="../assets/images/valid.png" style="width: 27px; margin-left: 10px;" /></a>
+                <a title="Enregistrer les modifications" (click)="saveChanges()">
+                    <img src="../assets/images/save3.png" style="width: 18px; margin-left: 10px;" /> </a>
+                <a title="Soumettre pour validation"><img src="../assets/images/soumettre.png" style="width: 20px; margin-left: 10px;" />
+
+                </a>
             </td>
         </tr>
         <tr>
             <th colspan=" 2 ">
-                Total/jour</th>
+                bb
+
+            </th>
         </tr>
     </table>
 
 
 </div>
+
 <nz-modal [(nzVisible)]="isVisible " nzTitle="Choisir un project " (nzOnCancel)="handleCancel() " (nzOnOk)="add() ">
-    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Recherche" [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Recherche " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
         <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
 
     </nz-select>

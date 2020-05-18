@@ -20,7 +20,7 @@ export class RelationsComponent implements OnInit {
  
 
   ngOnInit() {
-    this.getAllUsers()
+    this.getAllUsers()   
     console.log(this.selectedValidator)
   }
   getAllUsers(){
@@ -37,7 +37,7 @@ export class RelationsComponent implements OnInit {
       },
       err=>{
         console.log(err);
-      }
+      }    
     )
    this.validatorsList=myValid
    this.collaboratorsList=myCollab
@@ -68,10 +68,9 @@ UpdateUser(validatorId:number,collabList:User[]){
 }
 cancel(){
   this.selectedValidator=null 
-      this.selectedCollaboratorsList=[] 
+      this.selectedCollaboratorsList=[]      
 
 }
-
 
 
 addCollabs(){

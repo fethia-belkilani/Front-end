@@ -1,17 +1,21 @@
-nz-select {
-    width: 120px;
-    margin-right: 50px;
-}
-
-.side {
-    padding-right: 100px;
-    width: 40%;
-}
-
-#container {
-    display: flex;
-}
-
-nz-select {
-    width: 100%;
-}
+                nz-select {
+                    width: 120px;
+                    margin-right: 50px;
+                }
+                
+                .side {
+                    padding-right: 100px;
+                    width: 40%;
+                }
+                
+                #container {
+                    display: flex;
+                }
+                
+                nz-select {
+                    width: 100%;
+                }
+                
+                .ant-select-selection {
+                    background-color: green;
+                }

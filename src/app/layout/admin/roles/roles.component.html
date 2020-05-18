@@ -1,19 +1,24 @@
-<nz-table style=" width: 80%; ">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Validateur</th>
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
 
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor=" let user of usersList ">
-            <td>{{user.id}}</td>
-            <td>{{user.name}}</td>
-            <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator,user.validators,user.collaborators) "></td>
+    <table class="table table-bordered table-striped mb-0">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col" style="width: 20%;">Validateur?</th>
+            </tr>
+        </thead>
+        <tbody>
 
-        </tr>
+            <tr *ngFor=" let user of usersList ">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator,user.validators,user.collaborators) "></td>
 
-    </tbody>
-</nz-table>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+</div>

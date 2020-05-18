@@ -5,6 +5,7 @@ import { ProjectService } from './../../../_services/project.service';
 import { Project } from './../../../_models/project';
 import { EventService } from './../../../_services/event.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { Imputation } from './../../../_models/imputation';
 
 
 
@@ -54,21 +55,29 @@ export class HomeComponent implements OnInit {
     }
     return days;
   }
- 
+
 
   next() {
-    this.x = this.x.weekday(8);
+    this.x = this.x.weekday(0);
     this.currentWeek = this.getWeek(this.x.weekday(8));
-    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+    this.map.forEach((list: Imputation[], id: number) => {
+      //console.log("proj ID",id);
+      this.getImputations(id,this.x.format('YYYY-MM-DD'))
+    });  
+
     this.getEvents(this.x.format('YYYY-MM-DD'))
 
 
   }
-
+ 
   prev() {
     this.x = this.x.weekday(-8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
-    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+   this.map.forEach((list: Imputation[], id: number) => {
+    //console.log("proj ID",id);
+    this.getImputations(id,this.x.format('YYYY-MM-DD'))
+
+  });  
     this.getEvents(this.x.format('YYYY-MM-DD'))
 
     
@@ -78,31 +87,17 @@ export class HomeComponent implements OnInit {
     return moment(date).format("YYYY-MM-DD")
   }
 
-  formSimple(date:Date){
-    return moment(date).format("MM-DD")
+  formWeek(date:Date){
+    return moment(date).format("DD-MM")
+  }
+  formToday(date:Date){
+    return moment(date).format("DD-MM-YYYY")
   }
   ///////////////////////////////////  Table code   ////////////////////////////////////////////////////
-
-
-    updateList(id: number, property: string, event: any) {
-      const editField = event.target.textContent;
-      this.projectList[id][property] = editField;
-    }
-
-    remove(id: any) {
-      this.projectList.splice(id, 1);
-    }
-   
- 
-    changeValue(id: number, property: string, event: any) {
-      this.editField = event.target.textContent;
-    }
-  
   getProjects(){
     this.projectService.getProjects().subscribe(
       res=>{
        this.intialProjectList= res;  
-       //console.log(res)    
         },
       err=>{
         console.log(err);
@@ -128,10 +123,8 @@ export class HomeComponent implements OnInit {
           });
           weekImp.push(obj)
         });
-      // this.weekImputations=weekImp
       this.map.set(projectId,weekImp)
-      console.log(this.map)
-      // console.log(this.weekImputations)    
+     // console.log(this.map)
         },
       err=>{
         console.log(err);
@@ -158,24 +151,21 @@ export class HomeComponent implements OnInit {
            weekEv.push(obj)
          });
         this.weekEvents = weekEv;  
-       // console.log(this.weekEvents)    
          },
        err=>{
          console.log(err);
        }
      )   
    }
+
+   saveChanges(project){
+     console.log("keys",project)
+
+
+   }
  
 
   /////////////////////////////   Modal code   ///////////////////////////////////////////
- 
-
-  openModal(targetModal) {
-   this.modalService.open(targetModal, {
-    centered: true,
-    backdrop: 'static'
-   });
-  }
   showModal(): void {
     this.isVisible = true;
   }
@@ -184,7 +174,6 @@ export class HomeComponent implements OnInit {
     this.isVisible = false;
     this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
     this.getEvents(this.x.format('YYYY-MM-DD'))
-
   }
 
   handleCancel(): void {
@@ -203,7 +192,7 @@ export class HomeComponent implements OnInit {
 
   onChange(selectedProject){
     this.selectedProject = selectedProject
-    //console.log(selectedProject)
+
   }
 
 

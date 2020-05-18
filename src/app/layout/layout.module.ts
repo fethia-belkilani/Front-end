@@ -17,7 +17,11 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { ValidationComponent } from '../validation/validation.component';
 registerLocaleData(localeFr);
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+
 
 
 
@@ -30,6 +34,7 @@ registerLocaleData(localeFr);
     FormsModule,
     ReactiveFormsModule,
     NzTableModule,
+    NzProgressModule ,
 
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -42,6 +47,7 @@ registerLocaleData(localeFr);
     CalendarComponent,
     HomeComponent,
     TestComponent,
+    ValidationComponent,
    ],
    
   exports: [LayoutComponent],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as Chartist from 'chartist';
 @Component({
   selector: 'app-hello',
   templateUrl: './dashboard.component.html',
@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
 
   constructor() { }
+ 
+
+
 
   ngOnInit() {
-  }
-
+  
+  }              
+ 
 }

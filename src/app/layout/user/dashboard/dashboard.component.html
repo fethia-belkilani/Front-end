@@ -1,1 +1,72 @@
-<p>hello works!</p>
+<div class="wrapper">
+
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Mes projets</h4>
+                                <p class="card-category">En cours:</p>
+                                <p class="card-category">Tous:</p>
+
+                            </div>
+                            <div class="card-body ">
+                                <h4 class="card-title">Mes Managers</h4>
+
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Cras justo odio
+                                        <span class="badge badge-primary badge-pill">14</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Dapibus ac facilisis in
+                                        <span class="badge badge-primary badge-pill">2</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Morbi leo risus
+                                        <span class="badge badge-primary badge-pill">1</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card ">
+                            <div class="card-header ">
+
+                                <h4 class="card-title">Mes tâches
+
+                                </h4>
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Choisir un projet" [(ngModel)]="selectedValue">
+                                    <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                                    <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                                    <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                                </nz-select>
+                                <div style="float: right; ">
+                                    <nz-progress [nzPercent]="75" nzType="circle" [nzWidth]="80"></nz-progress>
+                                    <nz-progress [nzPercent]="70" nzType="circle" [nzWidth]="80" nzStatus="exception"></nz-progress>
+                                    <nz-progress [nzPercent]="100" nzType="circle" [nzWidth]="80"></nz-progress>
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <div id="chartHours" class="ct-chart"></div>
+                            </div>
+                            <div class="card-footer ">
+                                aaaaaaaaaaaaaaaaaaa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
