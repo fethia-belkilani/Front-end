@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+
+    <table>
+        <tr *ngFor="let record of formFields">
+            <td>
+                <div>
+                    <input matInput [placeholder]="record.key" [(ngModel)]="record.value" [name]="record.key" [id]="record.value" />
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <button type="submit" name="submit">Submit</button>
+</form>
+<br> formFields: <pre>{{ formFields | json }}</pre> mapRecord: <pre>{{ mapRecord | json }}</pre>

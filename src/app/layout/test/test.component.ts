@@ -1,5 +1,7 @@
-import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit,ChangeDetectionStrategy, Input } from '@angular/core';
 import { CalendarDateFormatter } from 'angular-calendar';
+import { NgForm } from '@angular/forms';
+
 interface Person {
   id: number;
   name: string;
@@ -17,27 +19,28 @@ interface Person {
 export class TestComponent implements OnInit {
   constructor() {
   }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
+  @Input() public mapRecord?: any;
 
-  ngOnInit(): void { }
-  listOfData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+  public formFields: { key: string, value: string }[] = this.toFormFields({
+    "Col1": "Val1",
+    "Col2": "Val2",
+    "Col3": "",
+  });
+
+  ngOnChanges() {
+    this.formFields = this.toFormFields(this.mapRecord);
+  }
+
+  private toFormFields(data: any) {
+    return Object.keys(data).map(key => ({ key, value: data[key] }));
+  }
+
+  public onSubmit(form: NgForm) {
+    this.mapRecord = form.value;
+    // Do submit logic
+  }
 }
   

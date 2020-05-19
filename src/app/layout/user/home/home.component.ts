@@ -6,6 +6,8 @@ import { Project } from './../../../_models/project';
 import { EventService } from './../../../_services/event.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Imputation } from './../../../_models/imputation';
+import { FormGroup } from '@angular/forms';
+import { ImputationService } from './../../../_services/imputation.service';
 
 
 
@@ -19,7 +21,7 @@ import { Imputation } from './../../../_models/imputation';
 
 export class HomeComponent implements OnInit {
   constructor(private projectService:ProjectService, private eventService: EventService,
-    private modal:NzModalService) { }
+    private modal:NzModalService, private imputationService:ImputationService) { }
   
   intialProjectList: Array<Project> = [];
   projectList: Array<Project> = [];
@@ -27,6 +29,10 @@ export class HomeComponent implements OnInit {
   weekImputations:any[]
   map=new Map()
   weekEvents:any[]
+
+  sumDay=0
+  sumWeek=0
+  
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -37,9 +43,13 @@ export class HomeComponent implements OnInit {
   private modalService: NgbModal
   private selectedProject;
   private weekStartDay;
+   
 
-  ngOnInit() {
+  ngOnInit() { 
     this.getProjects();
+   
+      //this.UpdateImputation(this.imput)
+    
   }
 
   getWeek(dt) {
@@ -124,7 +134,7 @@ export class HomeComponent implements OnInit {
           weekImp.push(obj)
         });
       this.map.set(projectId,weekImp)
-     // console.log(this.map)
+     console.log(this.map)
         },
       err=>{
         console.log(err);
@@ -158,10 +168,49 @@ export class HomeComponent implements OnInit {
      )   
    }
 
-   saveChanges(project){
-     console.log("keys",project)
+   UpdateImputation(imputation){
+    this.imputationService.update(imputation)
+        .subscribe(
+          res => {
+            console.log("res:", res);
+            console.log('okkkk')
+          },
+          err => console.log(err)
+        )
+  }
 
 
+  sum(projId){
+  
+    console.log("recherche",this.map.get(projId))
+
+
+  }
+
+
+   changeImputations(imp,projId)
+   {
+    // console.log("impppp",imp)
+    if(imp.id!= null){
+      console.log("proj",projId)
+    this.UpdateImputation(imp)}
+
+   /* else{
+      var imput: Imputation = {
+        id:null, 
+        project: 
+        hours:imp.hours
+        date:Date;
+        user: User;
+        state:string;
+      }
+
+
+    }*/
+      // console.log("changed:    ",val)
+       //console.log("mappp",this.map)
+
+    
    }
  
 

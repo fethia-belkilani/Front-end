@@ -19,6 +19,7 @@
     </div>
 </div>
 <br />
+
 <div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
@@ -40,18 +41,20 @@
             <th class="text-center">Total</th>
             <th>Valider</th>
         </tr>
+
+
         <tr *ngFor="let project of projectList; let i = index">
             <td>
                 <span nz-typography>{{project.id}}</span>
             </td>
             <td>
+
                 <span nz-typography>{{project.name}}</span>
             </td>
-
             <ng-container *ngFor="let item of map | keyvalue">
                 <ng-container *ngIf="item.key== project.id">
                     <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
-                        <span nz-typography>{{imp.hours}}</span>
+                        <input nz-typography [(ngModel)]="imp.hours" (change)=" changeImputations(imp,project.id) ">
                     </td>
                 </ng-container>
             </ng-container>
@@ -60,25 +63,25 @@
 
             <td></td>
             <td>
-                <a title="Enregistrer les modifications" (click)="saveChanges()">
-                    <img src="../assets/images/save3.png" style="width: 18px; margin-left: 10px;" /> </a>
-                <a title="Soumettre pour validation"><img src="../assets/images/soumettre.png" style="width: 20px; margin-left: 10px;" />
 
+                <a title="Soumettre pour validation "><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
                 </a>
             </td>
+
         </tr>
         <tr>
             <th colspan=" 2 ">
-                bb
-
+                Total/j
             </th>
+            <td *ngFor="let number of [0,1,2,3,4,5,6]"> {{number}}</td>
+
         </tr>
     </table>
 
 
 </div>
 
-<nz-modal [(nzVisible)]="isVisible " nzTitle="Choisir un project " (nzOnCancel)="handleCancel() " (nzOnOk)="add() ">
+<nz-modal [(nzVisible)]=" isVisible " nzTitle="Choisir un project " (nzOnCancel)="handleCancel() " (nzOnOk)="add() ">
     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Recherche " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
         <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
 
