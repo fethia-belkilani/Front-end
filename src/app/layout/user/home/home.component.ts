@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ProjectService } from './../../../_services/project.service';
@@ -8,6 +8,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { Imputation } from './../../../_models/imputation';
 import { FormGroup } from '@angular/forms';
 import { ImputationService } from './../../../_services/imputation.service';
+import { element } from 'protractor';
 
 
 
@@ -24,14 +25,16 @@ export class HomeComponent implements OnInit {
     private modal:NzModalService, private imputationService:ImputationService) { }
   
   intialProjectList: Array<Project> = [];
-  projectList: Array<Project> = [];
+  selectedProjectsList: Array<Project> = [];
   editField: string;
   weekImputations:any[]
   map=new Map()
   weekEvents:any[]
 
-  sumDay=0
-  sumWeek=0
+  //@Input() type: 0| 0.25| 0.5|0.75|1;
+
+
+  
   
 
 
@@ -70,9 +73,8 @@ export class HomeComponent implements OnInit {
   next() {
     this.x = this.x.weekday(0);
     this.currentWeek = this.getWeek(this.x.weekday(8));
-    this.map.forEach((list: Imputation[], id: number) => {
-      //console.log("proj ID",id);
-      this.getImputations(id,this.x.format('YYYY-MM-DD'))
+    this.map.forEach((list: Imputation[], project:Project) => {
+      this.getImputations(project,this.x.format('YYYY-MM-DD'))
     });  
 
     this.getEvents(this.x.format('YYYY-MM-DD'))
@@ -83,9 +85,8 @@ export class HomeComponent implements OnInit {
   prev() {
     this.x = this.x.weekday(-8);
     this.currentWeek = this.getWeek(this.x.weekday(8));
-   this.map.forEach((list: Imputation[], id: number) => {
-    //console.log("proj ID",id);
-    this.getImputations(id,this.x.format('YYYY-MM-DD'))
+   this.map.forEach((list: Imputation[], project:Project) => {
+    this.getImputations(project,this.x.format('YYYY-MM-DD'))
 
   });  
     this.getEvents(this.x.format('YYYY-MM-DD'))
@@ -115,8 +116,8 @@ export class HomeComponent implements OnInit {
     )
   }
 
- getImputations(projectId:number,date:string){
-   this.projectService.getWeekImputations(projectId,date).subscribe(
+ getImputations(project:Project,date:string){
+   this.projectService.getWeekImputations(project.id,date).subscribe(
       imputationData=>{
         let weekImp: Array<any> = [];
         this.currentWeek.forEach(day => {
@@ -133,7 +134,7 @@ export class HomeComponent implements OnInit {
           });
           weekImp.push(obj)
         });
-      this.map.set(projectId,weekImp)
+      this.map.set(project,weekImp)
      console.log(this.map)
         },
       err=>{
@@ -180,37 +181,38 @@ export class HomeComponent implements OnInit {
   }
 
 
-  sum(projId){
-  
-    console.log("recherche",this.map.get(projId))
-
-
-  }
-
-
    changeImputations(imp,projId)
    {
-    // console.log("impppp",imp)
     if(imp.id!= null){
       console.log("proj",projId)
     this.UpdateImputation(imp)}
-
-   /* else{
-      var imput: Imputation = {
-        id:null, 
-        project: 
-        hours:imp.hours
-        date:Date;
-        user: User;
-        state:string;
-      }
-
-
-    }*/
-      // console.log("changed:    ",val)
-       //console.log("mappp",this.map)
-
     
+   }
+
+
+
+
+
+   sumDay(ind){
+    var s=0
+    this.map.forEach((value,key) => {
+      if(value[ind].id!=null){
+    s+=Number.parseFloat(value[ind].hours)
+
+      }  
+    });
+    return s
+   }
+  
+
+   sumWeek(project){
+     var s=0
+    var list:Imputation[]= this.map.get(project)
+    list.forEach(imputation=>{
+      if(imputation.hours!=null)
+     s+= imputation.hours
+      });
+     return s
    }
  
 
@@ -221,7 +223,7 @@ export class HomeComponent implements OnInit {
 
   handleOk(): void {
     this.isVisible = false;
-    this.getImputations(this.selectedProject.id,this.x.format('YYYY-MM-DD'))
+    this.getImputations(this.selectedProject,this.x.format('YYYY-MM-DD'))
     this.getEvents(this.x.format('YYYY-MM-DD'))
   }
 
@@ -231,12 +233,15 @@ export class HomeComponent implements OnInit {
   ////////////////////////////////  List Code /////////////////////////////////////////////////////////
 
   add() {  
-    if(!(this.projectList.find(project=>project.id===this.selectedProject.id)))
-    {this.projectList.push(this.selectedProject)
+    if(!(this.selectedProjectsList.find(project=>project.id===this.selectedProject.id)))
+    {this.selectedProjectsList.push(this.selectedProject)
     this.handleOk()   }    
     else{
       this.warning()
-    }                    
+    }  
+    
+    
+    this.getImputations(this.selectedProject,this.x.format('YYYY-MM-DD'))
   }
 
   onChange(selectedProject){

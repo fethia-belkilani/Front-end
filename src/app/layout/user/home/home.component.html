@@ -43,39 +43,49 @@
         </tr>
 
 
-        <tr *ngFor="let project of projectList; let i = index">
-            <td>
-                <span nz-typography>{{project.id}}</span>
-            </td>
-            <td>
-
-                <span nz-typography>{{project.name}}</span>
-            </td>
-            <ng-container *ngFor="let item of map | keyvalue">
-                <ng-container *ngIf="item.key== project.id">
-                    <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
-                        <input nz-typography [(ngModel)]="imp.hours" (change)=" changeImputations(imp,project.id) ">
-                    </td>
-                </ng-container>
-            </ng-container>
 
 
+        <ng-container *ngFor="let item of map | keyvalue">
+            <tr>
+                <td>
+                    <span nz-typography>{{item.key.id}}</span>
+                </td>
+                <td>
 
-            <td></td>
-            <td>
+                    <span nz-typography>{{item.key.name}}</span>
+                </td>
+                <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
+                    <input nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key.id) ">
+                </td>
+                <td>{{sumWeek(item.key)}}</td>
 
-                <a title="Soumettre pour validation "><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
-                </a>
-            </td>
+                <td>
 
-        </tr>
+                    <a title="Soumettre pour validation "><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
+                    </a>
+                </td>
+            </tr>
+
+        </ng-container>
         <tr>
             <th colspan=" 2 ">
-                Total/j
+                Total/jour
             </th>
-            <td *ngFor="let number of [0,1,2,3,4,5,6]"> {{number}}</td>
+            <td *ngFor="let i of [0,1,2,3,4,5,6] "> {{sumDay(i)}}</td>
+            <td></td>
+            <td></td>
+
 
         </tr>
+
+
+
+
+
+
+
+
+
     </table>
 
 

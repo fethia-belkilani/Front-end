@@ -1,15 +1,13 @@
 <div class="row text-center">
     <div class="col-md-4">
         <div class="btn-group">
-            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
-                Préc
-            </div>
-            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                Aujourd'hui
-            </div>
-            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
-                Suiv
-            </div>
+
+            <button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-left" ></i></button>
+
+            <button mwlCalendarToday [(viewDate)]="viewDate" nz-button [nzSize]="size">Aujourd'hui</button>
+
+            <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-right" ></i></button>
+
         </div>
     </div>
     <div class="col-md-4">
@@ -20,10 +18,11 @@
     <div class="col-md-4">
         <button (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="plus"></i>Evènnement</button>
 
-
     </div>
 </div>
 <br />
+
+
 
 <div [ngSwitch]="view" style="width: 90%; margin-left: 5%;">
     <mwl-calendar-month-view [events]="events" [refresh]="refresh" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (eventClicked)="eventClicked($event)">
