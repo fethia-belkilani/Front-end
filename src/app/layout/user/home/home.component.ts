@@ -4,11 +4,12 @@ import * as moment from 'moment';
 import { ProjectService } from './../../../_services/project.service';
 import { Project } from './../../../_models/project';
 import { EventService } from './../../../_services/event.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
 import { Imputation } from './../../../_models/imputation';
 import { FormGroup } from '@angular/forms';
 import { ImputationService } from './../../../_services/imputation.service';
 import { element } from 'protractor';
+import { NzModalService } from 'ng-zorro-antd/modal';
+
 
 
 
@@ -250,11 +251,18 @@ export class HomeComponent implements OnInit {
   }
 
 
-
   warning(): void {
     this.modal.warning({
       nzTitle: 'Warning',
       nzContent: 'Ce projet est déja sélectionné'
+    });
+  }
+
+  showConfirm(): void {
+    this.modal.confirm({
+      nzTitle: 'Soumettre cette activité pour validation?',
+      nzContent: 'Vous ne pourrez jamais effectuer des changements',
+     
     });
   }
 }

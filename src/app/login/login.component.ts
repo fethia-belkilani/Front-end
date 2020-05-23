@@ -8,7 +8,10 @@ import { da } from 'date-fns/locale';
 import { Role } from 'src/app/_models';
 
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+    templateUrl: 'login.component.html',
+    styleUrls: ['login.component.css']
+  })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;

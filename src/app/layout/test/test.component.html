@@ -1,15 +1,32 @@
-<form (ngSubmit)="onSubmit(heroForm)" #heroForm="ngForm">
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
 
-    <table>
-        <tr *ngFor="let record of formFields">
-            <td>
-                <div>
-                    <input matInput [placeholder]="record.key" [(ngModel)]="record.value" [name]="record.key" [id]="record.value" />
-                </div>
-            </td>
-        </tr>
-    </table>
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="../assets/images/wevioo_1.png" id="icon" alt="wevioo" />
+            <h5>TimeVioo</h5>
+        </div>
 
-    <button type="submit" name="submit">Submit</button>
-</form>
-<br> formFields: <pre>{{ formFields | json }}</pre> mapRecord: <pre>{{ mapRecord | json }}</pre>
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <input type="text" id="login" class="fadeIn second" placeholder="Login" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Username is required</div>
+            </div>
+            <input type="text" id="password" class="fadeIn third" formControlName="password" placeholder="Mot de passe" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <input [disabled]="loading" type="submit" class="fadeIn fourth" value="Connexion">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="https://www.wevioo.com/fr">www.wevioo.com</a>
+        </div>
+
+    </div>
+</div>
