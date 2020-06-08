@@ -3,7 +3,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule, NzSelectModule, NzTableModule, NzListModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzSelectModule, NzTableModule, NzListModule, NzFilterGroupOptionPipe, NzDropDownModule, NzDropdownMenuComponent } from 'ng-zorro-antd';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { RolesComponent } from './admin/roles/roles.component';
@@ -27,6 +27,7 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 
 
 
+
 @NgModule({
   imports: [LayoutRoutingModule, NzCalendarModule,NzSelectModule, IconsProviderModule,
     NgZorroAntdModule, NzListModule, CommonModule,
@@ -35,6 +36,9 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
     ReactiveFormsModule,
     NzTableModule,
     NzProgressModule ,
+    NzDropDownModule,
+
+ 
 
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -53,4 +57,6 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
   exports: [LayoutComponent],
 
 })
-export class LayoutModule { }
+export class LayoutModule {
+   
+ }

@@ -6,18 +6,20 @@ import { User } from '../_models';
 import { Role } from '../_models';
 
 const users: User[] = [
-    { id: 1, username: 'admin', password: 'admin', role: Role.Admin,name:"", isValidator:false },
-    { id: 2, username: 'user', password: 'user',role: Role.User,name:"", isValidator:false  }
+    { id: 2, username: 'admin', password: 'admin', role: Role.Admin, name:'Administrateur', isValidator:false ,validators:[],collaborators:[]},
+    { id: 1, username: 'user', password: 'user',role: Role.User,name:"fethia", isValidator:false ,validators:[],collaborators:[] },
+    { id: 3, username: 'val', password: 'val',role: Role.User,name:"Jameeel", isValidator:true ,validators:[],collaborators:[] }
+
 ];
 
-@Injectable()
+@Injectable() 
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const { url, method, headers, body } = request;
+        const { url, method, headers, body } = request;     
 
         // wrap in delayed observable to simulate server api call
         return of(null)
-            .pipe(mergeMap(handleRoute))
+           .pipe(mergeMap(handleRoute))
             .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
             .pipe(delay(500))
             .pipe(dematerialize());
@@ -28,8 +30,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                /* case url.endsWith('/users') && method === 'GET':
                     return getUsers();*/
-                case url.match(/\/users\/\d+$/) && method === 'GET':
-                    return getUserById();
+                //case url.match(/\/users\/\d+$/) && method === 'GET':
+                  //  return getUserById();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -47,20 +49,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 id: user.id,
                 username: user.username,
                 role: user.role,
+                isValidator:user.isValidator,
+                name:user.name,
                 token: `fake-jwt-token.${user.id}`
+
             });
         }
 
         function getUsers() {
-            if (!isAdmin()) return unauthorized();
+           // if (!isAdmin()) return unauthorized();
             return ok(users);
         }
 
         function getUserById() {
-            if (!isLoggedIn()) return unauthorized();
+           // if (!isLoggedIn()) return unauthorized();
 
             // only admins can access other user records
-            if (!isAdmin() && currentUser().id !== idFromUrl()) return unauthorized();
+           // if (!isAdmin() && currentUser().id !== idFromUrl()) return unauthorized();
 
             const user = users.find(x => x.id === idFromUrl());
             return ok(user);
@@ -88,6 +93,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function isAdmin() {
             return isLoggedIn() && currentUser().role === Role.Admin;
         }
+
+        function isvalidator() {
+            return isLoggedIn() && currentUser().isValidator
+        }
+
 
         function currentUser() {
             if (!isLoggedIn()) return;

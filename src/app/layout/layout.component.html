@@ -38,7 +38,7 @@
                 </ul>
             </li>
 
-            <li nz-submenu nzOpen nzTitle="Collaborateurs" nzIcon="user">
+            <li *ngIf="isValidator" nz-submenu nzOpen nzTitle="Espace de travail" nzIcon="usergroup-add">
                 <ul>
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/validation">Validations</a>
@@ -77,7 +77,7 @@
                 <span class="he">
                   
                     <ul  nz-menu nzMode="inline" >
-                        <li nz-submenu nzTitle="Fethia Belkilani" nzIcon="user" >
+                        <li nz-submenu nzTitle= "{{user.name}}" nzIcon="user" >
                             <ul>
                                 
                                         <li nz-menu-item nzSelected >informations </li>

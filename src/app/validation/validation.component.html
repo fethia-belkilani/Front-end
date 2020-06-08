@@ -1,24 +1,35 @@
-<div class="container" style="width: 40%;">
+<div class="row" style="width: 40%;">
 
+    <div class="col-8">
+        <div class="btn-group">
 
-    <div class="well">
-        <div class="center">
-            <div class="col-sm-2 text-center"> <button nz-button style="background-color: gray;" [nzSize]="size" (click)="prev()"><i nz-icon nzType="double-left" nzTheme="outline"></i></button>
+            <button (click)="prev()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-left" class="sml-btn-icon" ></i></button>
 
-            </div>
-            <div class="col-md-5 text-center">
-                <h5>{{formToday(today) }}</h5>
-            </div>
-            <div class="col-sm-2 text-center">
-                <button nz-button style="background-color: gray;" [nzSize]="size" (click)="next()"><i nz-icon nzType="double-right" nzTheme="outline"></i></button>
+            <button mwlCalendarToday [(viewDate)]="viewDate" nz-button [nzSize]="size"> {{formToday(today) }}</button>
 
-            </div>
+            <button (click)="next()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-right" class="sml-btn-icon" ></i></button>
+
         </div>
+    </div>
 
+    <div class="col-3">
+        <button (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="plus" class="sml-btn-icon"></i>Evènnement</button>
 
     </div>
 </div>
 <br />
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped text-center">
@@ -31,12 +42,12 @@
         </thead>
         <tr>
             <th>Collaborteur</th>
-            <th class="text-center">ID projet</th>
-            <th class="text-center">Nom projet</th>
-            <th class="text-center " *ngFor="let day of weekdays">
+            <th class="text-center ">ID projet</th>
+            <th class="text-center  ">Nom projet</th>
+            <th class="text-center " *ngFor="let day of weekdays ">
                 <span nz-typography>{{ day }}</span>
             </th>
-            <th class="text-center">Total</th>
+            <th class="text-center ">Total</th>
             <th>Valider</th>
         </tr>
 
@@ -44,10 +55,10 @@
 
 
 
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let collab of collaboratorsList">
+            <td><span nz-typography>{{collab.name}}</span></td>
+            <td><span nz-typography>1</span></td>
+            <td><span nz-typography>proj1</span></td>
             <td *ngFor="let i of [0,1,2,3,4,5,6] "> {{i}}</td>
             <td></td>
             <td></td>
@@ -58,6 +69,4 @@
 
 
     </table>
-
-
 </div>

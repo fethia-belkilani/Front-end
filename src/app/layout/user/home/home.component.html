@@ -21,15 +21,15 @@
 <br />
 
 <div id="table" class="table-editable center ">
-    <table class="table table-bordered table-responsive-md table-striped text-center">
+    <table class="table table-bordered table-responsive-md table-striped ">
         <thead>
-            <th colspan="2" style="width: 25%;">
+            <th colspan="2" style="width: 25%;" class="text-center">
                 Projets
                 <a (click)="showModal()">
                     <img src="../assets/images/add.png" style="width: 27px; margin-left: 10px;" />
                 </a>
             </th>
-            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek"> <span nz-typography>{{formWeek(date)}}</span></th>
+            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek" class="text-center"> <span nz-typography>{{formWeek(date)}}</span></th>
             <th colspan="2">Total/semaine</th>
         </thead>
         <tr>
@@ -39,11 +39,8 @@
                 <span nz-typography>{{ day }}</span>
             </th>
             <th class="text-center">Total</th>
-            <th>Valider</th>
+            <th>Envoyer</th>
         </tr>
-
-
-
 
         <ng-container *ngFor="let item of map | keyvalue">
             <tr>
@@ -54,24 +51,29 @@
 
                     <span nz-typography>{{item.key.name}}</span>
                 </td>
+
                 <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
-                    <input nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key.id) ">
+                    <input [disabled]="ind ==5 ||ind==6 " nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key,imp.hours,ind) ">
+
                 </td>
+
                 <td>{{sumWeek(item.key)}}</td>
 
                 <td>
 
-                    <a title="Soumettre pour validation " (click)="showConfirm()"><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
+                    <a title="Soumettre pour validation " (click)="showConfirm(item.value) "><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
                     </a>
                 </td>
+
             </tr>
 
         </ng-container>
+
         <tr>
             <th colspan=" 2 ">
                 Total/jour
             </th>
-            <td *ngFor="let i of [0,1,2,3,4,5,6] "> {{sumDay(i)}}</td>
+            <td *ngFor="let i of [0,1,2,3,4,5,6]">{{sumDay(i)}} </td>
             <td></td>
             <td></td>
 
@@ -83,7 +85,9 @@
     </table>
 
 
+
 </div>
+
 
 <nz-modal [(nzVisible)]=" isVisible " nzTitle="Choisir un project " (nzOnCancel)="handleCancel() " (nzOnOk)="add() ">
     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Recherche " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">

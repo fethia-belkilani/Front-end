@@ -10,3 +10,7 @@ form {
 .register-are {
     margin-bottom: 8px;
 }
+
+.sml-btn-icon {
+    vertical-align: 0.1em!important
+}

@@ -22,6 +22,8 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.getAllUsers()
     
   
@@ -67,8 +69,6 @@ export class RolesComponent implements OnInit {
       isValidator:state,
       collaborators:collaborators,
       validators:validators
-
-
     }
     this.UpdateUser(userToUpdate)
 

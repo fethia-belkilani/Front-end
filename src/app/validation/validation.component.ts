@@ -4,6 +4,10 @@ import { EventService } from '../_services/event.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { Project } from '../_models/project';
 import * as moment from 'moment';
+import { AuthenticationService, UserService } from 'src/app/_services';
+import { User } from '../_models';
+import { tap } from 'rxjs/operators';
+
 
 
 @Component({
@@ -12,37 +16,30 @@ import * as moment from 'moment';
   styleUrls: ['./validation.component.scss']
 })
 export class ValidationComponent implements OnInit {
+  constructor( private authenticationService:AuthenticationService, private usersServise:UserService){ }
   weekdays = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-  x = moment();
-  today = moment().format("YYYY-MM-DD");
-  currentWeek = this.getWeek(this.x);
-  isVisible = false;
-  private modalService: NgbModal
-  private selectedProject;
-  private weekStartDay;
-
-  intialProjectList: Array<Project> = [];
-  selectedProjectsList: Array<Project> = [];
-  editField: string;
-  weekImputations:any[]
-  map=new Map()
-  weekEvents:any[]
+  x = moment().clone().startOf('isoWeek');
+  currentWeek = this.getWeek(this.x);  today = moment().format("YYYY-MM-DD");
+  private currentUser:User
+  private collaboratorsList:User[]=[]
 
 
-  constructor(private projectService:ProjectService, private eventService: EventService,
-    private modal:NzModalService) { }
 
+ 
+  
   ngOnInit() {
+    this.getCurrentUser()
+    
+
   }
+ 
 
-
+  
+   
 
 
   getWeek(dt) {
     var weekStart = dt.clone().startOf('isoWeek');
-    this.weekStartDay = weekStart;
-    //console.log(this.weekStartDay)
-    var weekEnd = dt.clone().endOf('isoWeek');
     var days = [];
     for (var i = 0; i <= 6; i++) {
       days.push(moment(weekStart).add(i, 'days').format('YYYY-MM-DD')
@@ -54,16 +51,15 @@ export class ValidationComponent implements OnInit {
 
 
   next() {
-    this.x = this.x.weekday(0);
-    this.currentWeek = this.getWeek(this.x.weekday(8));
-  
+    this.x = this.x.clone().add(1, 'week'); 
+    this.currentWeek = this.getWeek(this.x);
+ 
 
   }
  
   prev() {
-    this.x = this.x.weekday(-8);
-    this.currentWeek = this.getWeek(this.x.weekday(8));
-
+     this.x = this.x.clone().add(-1, 'week'); 
+    this.currentWeek = this.getWeek(this.x);
 
     
   }
@@ -78,4 +74,30 @@ export class ValidationComponent implements OnInit {
   formToday(date:Date){
     return moment(date).format("DD-MM-YYYY")
   }
+///////////////////////////
+getCurrentUser(){
+ this.usersServise.getCurrentUser().subscribe(
+   res=>{
+     this.currentUser=res
+     this.collaboratorsList=this.currentUser.collaborators
+     console.log(this.collaboratorsList)
+     
+   }
+ )
+
+
+  
+ 
+}
+
+
+
+
+
+
+
+  
+
+
+
 }

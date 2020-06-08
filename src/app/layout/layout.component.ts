@@ -10,15 +10,21 @@ import { User, Role } from '../_models';
 })
 export class LayoutComponent {
 
-  constructor(public router: Router, private authenticationService: AuthenticationService) {
+  constructor(public router: Router, private authenticationService: AuthenticationService,) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   isCollapsed = false;
   currentUser: User;
+ private user=this.authenticationService.currentUserValue
+
+
 
   get isAdmin() {
     return this.currentUser && this.currentUser.role === Role.Admin;
+  }
+  get isValidator() {
+    return this.currentUser && this.currentUser.isValidator
   }
 
   logout() {
