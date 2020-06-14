@@ -92,3 +92,7 @@
         .user {
             margin-left: 20px;
         }
+        
+        nz-icon {
+            vertical-align: 0.1em!important
+        }

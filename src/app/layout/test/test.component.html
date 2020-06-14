@@ -1,31 +1,63 @@
-<table class="table table-bordered table-responsive-md table-striped">
-    <thead>
-        <tr>
-            <th scope=" col ">#</th>
-            <th scope="col ">Country</th>
-            <th scope="col ">Area</th>
-            <th scope="col ">Population</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let country of countries ">
-            <th scope="row ">{{ country.id }}</th>
-            <td>
-                <img [src]=" 'https://upload.wikimedia.org/wikipedia/commons/' + country.flag " class="mr-2 " style="width: 20px "> {{ country.name }}
-            </td>
-            <td>{{ country.area | number}}</td>
-            <td>{{ country.population | number }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="row tex-center" style="margin-bottom: 10px;;">
+    <div class="col-6 col-a row">
+        <span nz-typography class="col-md-3">Projet:</span>
+        <nz-select class="col-md" nzShowSearch nzAllowClear nzPlaceHolder="Gestion des imputations  " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+            <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
 
-<div class="d-flex justify-content-between p-2 ">
-    <ngb-pagination [collectionSize]="collectionSize " [(page)]="page " [pageSize]="pageSize ">
-    </ngb-pagination>
+        </nz-select>
 
-    <select class="custom-select " style="width: auto " [(ngModel)]="pageSize ">
-    <option [ngValue]="2 ">2 items per page</option>
-    <option [ngValue]="4 ">4 items per page</option>
-    <option [ngValue]="6 ">6 items per page</option>
-  </select>
+    </div>
+    <div class=" col-4 col-b">
+        <div class="btn-group">
+
+            <button (click)="prev()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-left" class="sml-btn-icon" ></i></button>
+
+            <button mwlCalendarToday [(viewDate)]="viewDate" nz-button [nzSize]="size"> 25-25-6598</button>
+
+            <button (click)="next()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-right" class="sml-btn-icon" ></i></button>
+
+        </div>
+    </div>
+    <div class="col-2  col-c ">
+
+        <button style="float:right;" (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="download" class="sml-btn-icon"></i>Génerer un rapport</button>
+
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-6 col-d row">
+        <span nz-typography class="col-md-3">Collaborateurs:</span>
+        <nz-select class="col-md" nzShowSearch nzAllowClear nzPlaceHolder="Gestion des imputations  " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+            <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
+
+        </nz-select>
+    </div>
+</div>
+<br/>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar ">
+
+    <table class="table table-bordered table-striped mb-0 ">
+        <thead>
+            <tr>
+                <th scope="col ">ID</th>
+                <th scope="col ">Nom</th>
+                <th scope="col " style="width: 20%; ">Validateur?</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor=" let user of usersList ">
+                <td>
+                    <span nz-typography>{{user.id}}</span></td>
+                <td><span nz-typography>{{user.name}}</span></td>
+                <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator,user.validators,user.collaborators) "></td>
+
+            </tr>
+
+
+        </tbody>
+    </table>
+
 </div>

@@ -5,8 +5,10 @@ export class User {
     id: number;
     name: string;
     isValidator:boolean;
-    validators:User[]=[];
-    collaborators:User[]=[];
+   validators:User[]=[];
+   collaborators:User[]=[];
+
+
     /////for fake backend
     username:string
     password: string

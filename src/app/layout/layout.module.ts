@@ -17,10 +17,11 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { ValidationComponent } from '../validation/validation.component';
 registerLocaleData(localeFr);
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { ProjectsComponent } from './manager/projects/projects.component';
+import { ValidationComponent } from './manager/validation/validation.component';
 
 
 
@@ -51,6 +52,7 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
     CalendarComponent,
     HomeComponent,
     TestComponent,
+    ProjectsComponent,
     ValidationComponent,
    ],
    

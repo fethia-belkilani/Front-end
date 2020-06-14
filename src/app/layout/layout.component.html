@@ -41,7 +41,10 @@
             <li *ngIf="isValidator" nz-submenu nzOpen nzTitle="Espace de travail" nzIcon="usergroup-add">
                 <ul>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/validation">Validations</a>
+                        <a routerLink="bb">Projets</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/validation">Collaborateurs</a>
                     </li>
 
                 </ul>
@@ -58,7 +61,7 @@
                     <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
                 </span>
 
-                <span>
+                <span *ngIf="router.url != '/test'">
 
                     <nz-input-group [nzSuffix]="suffixIconSearch" style="width: 20%;">
                         <input type="text" nz-input placeholder="Recherche" />
@@ -69,6 +72,7 @@
 
 
                 </span>
+
 
 
 

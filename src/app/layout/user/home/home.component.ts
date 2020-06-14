@@ -37,13 +37,15 @@ export class HomeComponent implements OnInit {
   map=new Map()
   weekEvents:Event[]
   user=this.authenticationService.currentUserValue
+  
 
   
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
   x = moment().clone().startOf('isoWeek');
-  currentWeek = this.getWeek(this.x);  today = moment().format("YYYY-MM-DD");
+  currentWeek = this.getWeek(this.x);  
+  today = moment().format("YYYY-MM-DD");
   isVisible = false;
   private selectedProject;
   private CurrentUser=this.authenticationService.currentUserValue
@@ -119,13 +121,13 @@ export class HomeComponent implements OnInit {
   }
 
  getImputations(project:Project,date:string){
-   this.projectService.getWeekImputations(project.id,date).subscribe(
+    this.projectService.getWeekImputations(this.user.id,project.id,date).subscribe(
       imputationData=>{
         let weekImp: Array<any> = [];
         this.currentWeek.forEach(day => {
           let obj = {
             date: null,
-            hours: null,
+            hours: null,            
             id: null,
             status: null
           };
@@ -152,7 +154,7 @@ export class HomeComponent implements OnInit {
            let obj = {
              id:null,
              title: null,
-             start: null,
+             start: null,         
              end: null,
            };
            eventData.forEach(element => {
@@ -255,8 +257,8 @@ export class HomeComponent implements OnInit {
   /////////////////////////////   Modal code   ///////////////////////////////////////////
   showModal(): void {
     this.isVisible = true;
-  }
-
+  }                                     
+                      
   handleOk(): void {
     this.isVisible = false;
     this.getImputations(this.selectedProject,this.x.format('YYYY-MM-DD'))
@@ -281,7 +283,6 @@ export class HomeComponent implements OnInit {
 
   onChange(selectedProject){
     this.selectedProject = selectedProject
-
   }
 
 

@@ -80,3 +80,26 @@ table td input {
 .search-button {
     margin-right: 8px;
 }
+
+.col-a {
+    background-color: blue;
+}
+
+.col-b {
+    background-color: red;
+    display: flex;
+    justify-content: center;
+}
+
+.col-c {
+    background-color: green;
+    float: left;
+}
+
+.col-d {
+    background-color: yellow;
+}
+
+.col-e {
+    background-color: pink;
+}

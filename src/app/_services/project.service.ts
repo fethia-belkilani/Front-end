@@ -4,7 +4,8 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Project } from '../_models/project';
 import { Imputation } from './../_models/imputation';
-import { AuthenticationService } from 'src/app/_services';
+import { User } from '../_models';
+import { AuthenticationService } from '.';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,15 @@ export class ProjectService {
   getProjects() :Observable<Array<Project>>{
     return this.http.get<Array<Project>>(`${environment.apiUrl}/projects/user/${this.user.id}`); 
 
-}
+  }
 
-getWeekImputations(projectId:number,date:string):Observable<Array<Imputation>>{
-  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/weekimputations/${this.user.id}/${projectId}/${date}`);
+  getProjectCollabs(projectId) :Observable<Array<User>>{
+    return this.http.get<Array<User>>(`${environment.apiUrl}/projects/user/${this.user.id}/project/${projectId}`); 
 
+  }
+
+getWeekImputations(userId:number,projectId:number,date:string):Observable<Array<Imputation>>{
+  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/weekimputations/${userId}/${projectId}/${date}`);
 
 }
 

@@ -26,4 +26,35 @@ th {
 td {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
+    text-align: center;
+}
+
+.col-b {
+    display: flex;
+    justify-content: center;
+}
+
+.col-c {
+    float: left;
+}
+
+th {
+    font-size: 14px;
+}
+
+table td {
+    position: relative;
+}
+
+table td input {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
 }

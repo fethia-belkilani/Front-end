@@ -3,12 +3,7 @@ import { UserService } from './../../../_services/user.service';
 import { User } from 'src/app/_models/user';
 import { element } from 'protractor';
 import { Validators } from '@angular/forms';
-interface ItemData {
-  id: number;
-  name: string;
-  age: number;
-  address: string;
-}
+
 
 
 @Component({
@@ -17,7 +12,7 @@ interface ItemData {
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
- 
+  
   constructor(private userService:UserService) {
   }
 
@@ -72,11 +67,12 @@ export class RolesComponent implements OnInit {
     }
     this.UpdateUser(userToUpdate)
 
-  }
+  }            
 
   log(value: object[]): void {
     console.log(value);
     console.log("liste:  ",this.usersList)
   }
+   
 
 }

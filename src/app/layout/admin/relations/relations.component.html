@@ -1,10 +1,8 @@
 <div id="container">
 
-    <div style="margin-bottom: 30px;">
-        <h4 nz-typography>Gérer les utilisateurs</h4>
-        <span nz-typography>Affecter des collaborateurs à un validateur,vous pouvez également supprimer une relation existante.</span>
+    <h4 nz-typography nzType="secondary" id="title" z-typography>Gérer les utilisateurs</h4>
 
-    </div>
+
 
 </div>
 
@@ -14,7 +12,6 @@
     <div class="side">
         <span nz-typography><strong>Validateur:</strong></span>
         <br>
-
 
         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Choisir un valiateur " [(ngModel)]="selectedValidator" (ngModelChange)="onChangeVal(selectedValidator) ">
             <nz-option *ngFor=" let validator of validatorsList " [nzValue]="validator" [nzLabel]="validator.name"></nz-option>

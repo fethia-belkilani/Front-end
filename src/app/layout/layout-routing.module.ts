@@ -8,7 +8,7 @@ import { HomeComponent } from './user/home/home.component';
 import { Role } from './../_models';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
-import { ValidationComponent } from '../validation/validation.component';
+import { ValidationComponent } from './manager/validation/validation.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
