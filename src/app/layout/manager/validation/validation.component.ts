@@ -4,6 +4,9 @@ import { AuthenticationService, UserService } from '../../../_services';
 import { Project } from 'src/app/_models/project';
 import { User } from 'src/app/_models';
 import { ProjectService } from 'src/app/_services/project.service';
+import { getWeek} from'src/app/common_utils';
+import { Imputation } from 'src/app/_models/imputation';
+
 
 @Component({
   selector: 'app-validation',
@@ -15,7 +18,7 @@ export class ValidationComponent implements OnInit {
   constructor( private authenticationService:AuthenticationService, private usersServise:UserService,private projectService:ProjectService){ }
   weekdays = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
   x = moment().clone().startOf('isoWeek');
-  currentWeek = this.getWeek(this.x);  
+  currentWeek = getWeek(this.x);  
   today = moment().format("YYYY-MM-DD");
   alllProjectList: Array<Project> = [];
 
@@ -35,32 +38,21 @@ export class ValidationComponent implements OnInit {
   }
  
 
-  
-   
-
-
-  getWeek(dt) {
-    var weekStart = dt.clone().startOf('isoWeek');
-    var days = [];
-    for (var i = 0; i <= 6; i++) {
-      days.push(moment(weekStart).add(i, 'days').format('YYYY-MM-DD')
-
-      );
-    }
-    return days;
-  }
 
 
   next() {
     this.x = this.x.clone().add(1, 'week'); 
-    this.currentWeek = this.getWeek(this.x);
- 
+    this.currentWeek = getWeek(this.x);
+    this.getImput(this.selecledCollabList,this.selecledProject,this.x.format('YYYY-MM-DD'))
+
 
   }
  
   prev() {
      this.x = this.x.clone().add(-1, 'week'); 
-    this.currentWeek = this.getWeek(this.x);
+    this.currentWeek = getWeek(this.x);
+    this.getImput(this.selecledCollabList,this.selecledProject,this.x.format('YYYY-MM-DD'))
+
 
     
   }
@@ -91,6 +83,9 @@ getProjects(){
 }
 /////////////////////////////after choosing a project
 onChange(selectedProject:Project){
+  this.selecledCollabList=[]
+  this.map.clear()
+
   this.selecledProject = selectedProject
   this.getProjectTeam(selectedProject.id)
 }

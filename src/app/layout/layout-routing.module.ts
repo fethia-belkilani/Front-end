@@ -9,6 +9,7 @@ import { Role } from './../_models';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { TestComponent } from './test/test.component';
 import { ValidationComponent } from './manager/validation/validation.component';
+import { ProjectsComponent } from './manager/projects/projects.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
@@ -20,6 +21,8 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent, data: { roles: [Role.Admin] } },
       { path: 'test', component: TestComponent,  },
       { path: 'validation', component: ValidationComponent,  },
+      { path: 'projects', component: ProjectsComponent,  },
+
 
     ]
   },

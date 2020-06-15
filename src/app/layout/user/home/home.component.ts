@@ -5,12 +5,11 @@ import { ProjectService } from './../../../_services/project.service';
 import { Project } from './../../../_models/project';
 import { EventService } from './../../../_services/event.service';
 import { Imputation, Status } from './../../../_models/imputation';
-import { FormGroup } from '@angular/forms';
 import { ImputationService } from './../../../_services/imputation.service';
-import { element } from 'protractor';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AuthenticationService, UserService } from 'src/app/_services';
 import { User } from 'src/app/_models';
+import { getWeek} from'src/app/common_utils';
    
 
 
@@ -44,7 +43,7 @@ export class HomeComponent implements OnInit {
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
   x = moment().clone().startOf('isoWeek');
-  currentWeek = this.getWeek(this.x);  
+  currentWeek = getWeek(this.x);  
   today = moment().format("YYYY-MM-DD");
   isVisible = false;
   private selectedProject;
@@ -58,21 +57,11 @@ export class HomeComponent implements OnInit {
  
   }
 
-  getWeek(dt) {
-    var weekStart = dt.clone().startOf('isoWeek');
-    var days = [];
-    for (var i = 0; i <= 6; i++) {
-      days.push(moment(weekStart).add(i, 'days').format('YYYY-MM-DD')
-
-      );
-    }
-    return days;
-  }
-
+ 
 
   next() {
     this.x = this.x.clone().add(1, 'week'); 
-    this.currentWeek = this.getWeek(this.x);
+    this.currentWeek = getWeek(this.x);
     this.map.forEach((list: Imputation[], project:Project) => {
       this.getImputations(project,this.x.format('YYYY-MM-DD'))
     });  
@@ -85,7 +74,7 @@ export class HomeComponent implements OnInit {
  
   prev() {
      this.x = this.x.clone().add(-1, 'week'); 
-    this.currentWeek = this.getWeek(this.x);
+    this.currentWeek = getWeek(this.x);
    this.map.forEach((list: Imputation[], project:Project) => {
     this.getImputations(project,this.x.format('YYYY-MM-DD'))
 
@@ -184,7 +173,7 @@ export class HomeComponent implements OnInit {
           },
           err => console.log(err)
         )}
-
+      
         else{
           this.warningChange()
 
@@ -202,7 +191,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-   changeImputations(imputation,project,hours,index) {  
+    changeImputations(imputation,project,hours,index) {  
     var dateImputation = new Date(this.x.format("YYYY-MM-DD"));
     dateImputation.setDate(dateImputation.getDate() + index);
     var user:User={"id":this.CurrentUser.id}
@@ -264,6 +253,7 @@ export class HomeComponent implements OnInit {
     this.getImputations(this.selectedProject,this.x.format('YYYY-MM-DD'))
   }
 
+
   handleCancel(): void {
     this.isVisible = false;
   }
@@ -308,7 +298,8 @@ export class HomeComponent implements OnInit {
 
     }
     console.log("sending",sending)
-    this.imputationService.sendToValidate(sending).subscribe(
+    var s="Sent"
+    this.imputationService.sendToValidate(s,sending).subscribe(
       res => {
         console.log("res:", res);
         console.log('lallala')
@@ -320,7 +311,7 @@ export class HomeComponent implements OnInit {
   showConfirm(listImputations): void {
     this.modal.confirm({
       nzTitle: 'Soumettre cette activité pour validation?',
-      nzContent: 'Une fois envoyée, vous ne pourrez jamais effectuer des changements',
+      nzContent: 'Une fois validée, vous ne pourrez jamais effectuer des changements',
       nzOnOk: () => {
             this.sendToValidation(listImputations )}
      
