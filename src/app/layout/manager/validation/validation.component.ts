@@ -83,6 +83,7 @@ getProjects(){
 }
 /////////////////////////////after choosing a project
 onChange(selectedProject:Project){
+  console.log("lp")
   this.selecledCollabList=[]
   this.map.clear()
 
@@ -143,7 +144,7 @@ getImput(usersList:User[],project:Project,date:string){
 
 
 
- getAlllimputations(){
+ getAllimputations(){
    this.getImput(this.selecledCollabList,this.selecledProject,this.x.format('YYYY-MM-DD'))
    
  }

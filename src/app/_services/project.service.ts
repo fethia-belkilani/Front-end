@@ -34,4 +34,9 @@ deleteProject(id: number): Observable<Project> {
   return this.http.delete<Project>(`${environment.apiUrl}/projects/${id}`);
 }
 
+getProjectWeekImputations(projectId:number,date:string):Observable<Array<number>>{
+  return this.http.get<Array<number>>(`${environment.apiUrl}/projects/projectimputations/${projectId}/${date}`);
+
+}
+
 }

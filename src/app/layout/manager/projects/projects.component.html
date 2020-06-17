@@ -1,1 +1,92 @@
-<p>projects works!</p>
+<div class="row tex-center" style="margin-bottom: 10px;;">
+    <div class="col-6  row">
+        <span nz-typography class="col-md-2">Projet:</span>
+        <nz-select class="col-md-8" nzShowSearch nzAllowClear nzPlaceHolder="Gestion des imputations  " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+            <nz-option *ngFor=" let project of alllProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
+        </nz-select>
+        <div class="col-2">
+            <button style="background-color: #218838; border-color: #218838;" (click)="add()" nz-button nzType="primary" [nzSize]="size">
+                Ajouter</button>
+        </div>
+
+    </div>
+    <div class=" col-4 col-b">
+        <div class="btn-group">
+            <button (click)="prev()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-left" class="sml-btn-icon" ></i></button>
+            <button mwlCalendarToday [(viewDate)]="viewDate" nz-button [nzSize]="size"> {{formToday(today)}}</button>
+            <button (click)="next()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="double-right" class="sml-btn-icon" ></i></button>
+        </div>
+    </div>
+    <div class="col-2  col-c ">
+        <button style="float:right;" (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="download" class="sml-btn-icon"></i>Génerer un rapport</button>
+    </div>
+</div>
+
+<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="table" class="table-editable center ">
+    <table class="table table-bordered table-responsive-md table-striped ">
+        <thead>
+
+            <th colspan="2"> </th>
+
+
+            <th scope="col" style="width: 7% ;" *ngFor="let date  of currentWeek"> <span nz-typography>{{formWeek(date)}}</span></th>
+            <th></th>
+        </thead>
+        <tr>
+            <th>
+                ID projet
+            </th>
+            <th>Nom projet</th>
+            <th *ngFor="let day of weekdays ">
+                <span nz-typography>{{ day }}</span>
+            </th>
+            <th class="text-center ">Total</th>
+        </tr>
+
+
+
+
+
+        <ng-container *ngFor="let item of map | keyvalue">
+            <tr>
+                <td>
+                    <span nz-typography>{{item.key.id}}</span>
+                </td>
+                <td>
+
+                    <span nz-typography>{{item.key.name}}</span>
+                </td>
+
+                <td *ngFor="let hours of item.value ;let ind=index">
+                    <input type="text" nz-typography [(ngModel)]=" hours " readonly>
+
+
+
+                </td>
+
+                <td>sum</td>
+
+
+
+            </tr>
+
+        </ng-container>
+
+
+
+    </table>
+</div>
