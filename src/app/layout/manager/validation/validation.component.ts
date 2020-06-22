@@ -6,6 +6,10 @@ import { User } from 'src/app/_models';
 import { ProjectService } from 'src/app/_services/project.service';
 import { getWeek} from'src/app/common_utils';
 import { Imputation } from 'src/app/_models/imputation';
+import * as XLSX from 'xlsx'; 
+import { ImputationService } from './../../../_services/imputation.service';
+import { NzModalService } from 'ng-zorro-antd';
+
 
 
 @Component({
@@ -15,7 +19,7 @@ import { Imputation } from 'src/app/_models/imputation';
 })
 export class ValidationComponent implements OnInit {
 
-  constructor( private authenticationService:AuthenticationService, private usersServise:UserService,private projectService:ProjectService){ }
+  constructor(private authenticationService:AuthenticationService, private modalService: NzModalService,private projectService:ProjectService, private imputationService:ImputationService){ }
   weekdays = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
   x = moment().clone().startOf('isoWeek');
   currentWeek = getWeek(this.x);  
@@ -26,6 +30,11 @@ export class ValidationComponent implements OnInit {
   private selecledProject:Project
   private selecledCollabList:User[]=[]
   private map=new Map()
+  private user=this.authenticationService.currentUserValue
+  name=this.user.name+ '_'+ this.x.format('DD-MM-YYYY')
+  fileName= this.name+'.xlsx';  
+
+
 
 
 
@@ -115,7 +124,7 @@ getProjectTeam(projectId:number){
 
 getImput(usersList:User[],project:Project,date:string){
   usersList.forEach(user=>{
-    this.projectService.getWeekImputations(user.id,project.id,date).subscribe(
+    this.projectService.getSentImputations(user.id,project.id,date).subscribe(
       imputationData=>{
         let weekImp: Array<any> = [];
         this.currentWeek.forEach(day => {
@@ -142,12 +151,68 @@ getImput(usersList:User[],project:Project,date:string){
  
  }
 
-
-
  getAllimputations(){
    this.getImput(this.selecledCollabList,this.selecledProject,this.x.format('YYYY-MM-DD'))
    
  }
+ sumUser(user){
+  var s=0
+  var list:Imputation[]= this.map.get(user)
+  list.forEach(imputation=>{
+    if(imputation.hours!=null)
+    s+= Number(imputation.hours)
+    
+    });
+   return s
+ }
+
+
+
+
+ success(): void {
+  const modal = this.modalService.success({
+    nzTitle: 'Opération réussie',
+    nzContent: 'Cette activité a été validée'
+  });
+
+  setTimeout(() => modal.destroy(), 2000);
+}
+ validate(list:Imputation[]){
+  var validated:Imputation[]=[]
+   for(let imp of list)
+   {
+     if(imp.id!=null)
+     validated.push(imp)
+
+   }
+   console.log("validated",validated)
+   this.imputationService.changeStatus("Valid",validated).subscribe(
+     res => {
+       console.log("res:", res);
+       this.success()
+     },
+     err => console.log(err)
+   )
+ 
+ }
+
+
+
+
+ exportexcel(): void 
+    {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
+    }
 
 
 }

@@ -4,13 +4,12 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="../assets/images/wevioo_1.png" id="icon" alt="wevioo" />
-            <h5>TimeVioo</h5>
+            <img src="../assets/images/log2.png" id="icon" alt="wevioo" />
         </div>
 
         <!-- Login Form -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <input type="text" id="login" class="fadeIn second" placeholder="Login" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <input type="text" id="username" class="fadeIn second" placeholder="Login" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                 <div *ngIf="f.username.errors.required">Username is required</div>
             </div>

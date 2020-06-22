@@ -16,6 +16,7 @@ export class ProjectService {
   user=this.authenticationService.currentUserValue
 
   getProjects() :Observable<Array<Project>>{
+    this.user=this.authenticationService.currentUserValue
     return this.http.get<Array<Project>>(`${environment.apiUrl}/projects/user/${this.user.id}`); 
 
   }
@@ -27,6 +28,11 @@ export class ProjectService {
 
 getWeekImputations(userId:number,projectId:number,date:string):Observable<Array<Imputation>>{
   return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/weekimputations/${userId}/${projectId}/${date}`);
+
+}
+
+getSentImputations(userId:number,projectId:number,date:string):Observable<Array<Imputation>>{
+  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/sentweekimputations/${userId}/${projectId}/${date}`);
 
 }
 

@@ -7,3 +7,7 @@ nz-progress {
 nz-select {
     width: 200px;
 }
+
+nz-list {
+    padding: 24px;
+}

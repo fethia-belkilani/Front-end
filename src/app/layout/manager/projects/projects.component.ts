@@ -103,7 +103,15 @@ getImput(projectsList:Project[],date:string){
  
  }
 
-
+ sumProject(project){
+  var s=0
+  var list:number[]= this.map.get(project)
+  list.forEach(val=>{
+    s+=val
+    
+    });
+   return s
+ }
 
 
 

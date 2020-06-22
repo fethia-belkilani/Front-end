@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Project } from './project';
 
 
 export enum Status {
@@ -6,11 +7,15 @@ export enum Status {
     Sent = 'Sent',
     Valid = 'Valid',   
 }
+export enum Hours {
+    
 
+}
+ 
 export class Imputation {
    
     id: number;
-    project: string;
+    project: Project;
     hours: number;
     date:Date;
     user: User;

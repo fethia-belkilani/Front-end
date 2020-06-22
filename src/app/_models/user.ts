@@ -14,4 +14,7 @@ export class User {
     password: string
     role: Role;
     token?: string;
+    constructor(id:number){
+        this.id=id
+    }
 }

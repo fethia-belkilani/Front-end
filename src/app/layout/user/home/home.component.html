@@ -3,14 +3,15 @@
 
     <div class="well">
         <div class="center">
-            <div class="col-sm-2 text-center"> <button nz-button nzType="primary" [nzSize]="size" (click)="prev()"><i nz-icon nzType="double-left" nzTheme="outline"></i></button>
+            <div class="col-md-2"> <button nz-button nzType="primary" [nzSize]="size" (click)="prev()"><i nz-icon nzType="double-left" class="sml-btn-icon"></i></button>
 
             </div>
-            <div class="col-md-5 text-center">
-                <h5>{{formToday(today) }}</h5>
+            <div class="col-md-5  " style="text-align: center;">
+                <h4 nz-typography>{{formToday(today) }}</h4>
+
             </div>
-            <div class="col-sm-2 text-center">
-                <button nz-button nzType="primary" [nzSize]="size" (click)="next()"><i nz-icon nzType="double-right" nzTheme="outline"></i></button>
+            <div class="col-md-2 ">
+                <button nz-button nzType="primary" [nzSize]="size" (click)="next()"><i nz-icon nzType="double-right" class="sml-btn-icon"></i></button>
 
             </div>
         </div>
@@ -23,47 +24,48 @@
 <div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped ">
         <thead>
-            <th colspan="2" style="width: 25%;" class="text-center">
-                Projets
+            <th colspan="2" style="width: 35%;">
+                <span nz-typography>Projets</span>
                 <a (click)="showModal()">
                     <img src="../assets/images/add.png" style="width: 27px; margin-left: 10px;" />
                 </a>
             </th>
-            <th scope="col" style="width: 8% ;" *ngFor="let date  of currentWeek" class="text-center"> <span nz-typography>{{formWeek(date)}}</span></th>
-            <th colspan="2">Total/semaine</th>
+            <th scope="col" style="width: 7% ;" *ngFor="let date  of currentWeek"> <span nz-typography>{{formWeek(date)}}</span></th>
+            <th colspan="2"><span nz-typography>Total/semaine </span></th>
         </thead>
         <tr>
-            <th class="text-center">ID</th>
-            <th class="text-center">Titre</th>
-            <th class="text-center " *ngFor="let day of weekdays">
+            <th style="width: 8%;"><span nz-typography>ID </span></th>
+            <th><span nz-typography>Titre </span></th>
+            <th *ngFor="let day of weekdays">
                 <span nz-typography>{{ day }}</span>
             </th>
-            <th class="text-center">Total</th>
-            <th>Envoyer</th>
+            <th> <span nz-typography>Total</span>
+            </th>
+            <th><span nz-typography>Envoyer</span></th>
         </tr>
 
         <ng-container *ngFor="let item of map | keyvalue">
             <tr>
                 <td>
-                    <span nz-typography>{{item.key.id}}</span>
+                    <span nz-typography><strong>{{item.key.id}}</strong></span>
                 </td>
                 <td>
 
-                    <span nz-typography>{{item.key.name}}</span>
+                    <span nz-typography><strong>{{item.key.name}}</strong></span>
                 </td>
-
                 <td contenteditable="true" *ngFor="let imp of item.value ;let ind=index">
-                    <input [disabled]="ind ==5 ||ind==6 " nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key,imp.hours,ind) ">
 
-                </td>
+                    <nz-input-number [disabled]="ind ==5 ||ind==6 " [(ngModel)]=" imp.hours " [nzMin]="0" [nzMax]="1" [nzStep]="0.25" (onChange)=" changeImputations(imp,item.key,imp.hours,ind)"></nz-input-number>
 
-                <td>{{sumWeek(item.key)}}</td>
+                    <td class=" centering ">
+                        <span nz-typography>{{sumWeek(item.key)}}</span>
+                    </td>
 
-                <td>
+                    <td class="centering ">
 
-                    <a title="Soumettre pour validation " (click)="showConfirm(item.value) "><img src="../assets/images/soumettre.png " style="width: 20px; margin-left: 10px; " />
-                    </a>
-                </td>
+                        <a title="Soumettre pour validation " (click)="showConfirm(item.value) "><img src="../assets/images/soumettre.png " style="width: 20px; " />
+                        </a>
+                    </td>
 
             </tr>
 
@@ -71,9 +73,12 @@
 
         <tr>
             <th colspan=" 2 ">
-                Total/jour
+                <span nz-typography>Total/jour </span>
+
             </th>
-            <td *ngFor="let i of [0,1,2,3,4,5,6]">{{sumDay(i)}} </td>
+            <td class="centering " *ngFor="let i of [0,1,2,3,4,5,6] ">
+                <span nz-typography>{{sumDay(i)}}</span>
+            </td>
             <td></td>
             <td></td>
 

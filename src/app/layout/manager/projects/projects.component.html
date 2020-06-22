@@ -64,21 +64,21 @@
         <ng-container *ngFor="let item of map | keyvalue">
             <tr>
                 <td>
-                    <span nz-typography>{{item.key.id}}</span>
+                    <span nz-typography> <strong>{{item.key.id}} </strong></span>
                 </td>
                 <td>
 
-                    <span nz-typography>{{item.key.name}}</span>
+                    <span nz-typography><strong>{{item.key.name}}</strong></span>
                 </td>
 
-                <td *ngFor="let hours of item.value ;let ind=index">
-                    <input type="text" nz-typography [(ngModel)]=" hours " readonly>
+                <td class="centering" *ngFor="let hours of item.value ;let ind=index">
 
+                    <span nz-typography>{{hours}}</span>
 
 
                 </td>
 
-                <td>sum</td>
+                <td class="centering"> <span>{{sumProject(item.key)}} </span></td>
 
 
 

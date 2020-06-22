@@ -17,8 +17,8 @@
             .center {
                 display: flex;
                 justify-content: center;
-                width: 90%;
-                margin-left: 5%;
+                // width: 90%;
+                // margin-left: 5%;
             }
             
             .center-button {
@@ -28,19 +28,27 @@
             
             th {
                 font-size: 14px;
+                text-align: center;
             }
             
-            td {
-                font-size: 13px;
+            td span {
+                font-size: 14px;
+                text-align: center;
+            }
+            
+            .centering {
                 text-align: center;
             }
             
             table td {
                 position: relative;
+                //text-align: center;
             }
             
             table td input {
+                font-size: 14px;
                 position: absolute;
+                text-align: center;
                 display: block;
                 top: 0;
                 left: 0;
@@ -50,4 +58,24 @@
                 border: none;
                 padding: 10px;
                 box-sizing: border-box;
+            }
+            
+            table td nz-input-number {
+                font-size: 14px;
+                position: absolute;
+                text-align: center;
+                display: block;
+                top: 0;
+                left: 0;
+                margin: 0;
+                height: 100%;
+                width: 100%;
+                border: none;
+                border-radius: initial;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+            
+            .sml-btn-icon {
+                vertical-align: 0.1em!important
             }

@@ -17,7 +17,7 @@ export class ImputationService {
    create(imput:Imputation){
   return this.http.post(`${environment.apiUrl}/imputations/`,imput);
 }
-sendToValidate(status:string,listImput:Imputation[]){
+changeStatus(status:string,listImput:Imputation[]){
   return this.http.put(`${environment.apiUrl}/imputations/changestatus/${status}/`,listImput);
 
 }

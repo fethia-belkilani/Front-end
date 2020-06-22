@@ -3,7 +3,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule, NzSelectModule, NzTableModule, NzListModule, NzFilterGroupOptionPipe, NzDropDownModule, NzDropdownMenuComponent } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzSelectModule, NzTableModule, NzListModule, NzFilterGroupOptionPipe, NzDropDownModule, NzDropdownMenuComponent, NzFormModule } from 'ng-zorro-antd';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { RolesComponent } from './admin/roles/roles.component';
@@ -29,6 +29,7 @@ import { ValidationComponent } from './manager/validation/validation.component';
 
 
 
+
 @NgModule({
   imports: [LayoutRoutingModule, NzCalendarModule,NzSelectModule, IconsProviderModule,
     NgZorroAntdModule, NzListModule, CommonModule,
@@ -38,6 +39,8 @@ import { ValidationComponent } from './manager/validation/validation.component';
     NzTableModule,
     NzProgressModule ,
     NzDropDownModule,
+    NzListModule,
+    NzFormModule ,
 
  
 
@@ -54,6 +57,7 @@ import { ValidationComponent } from './manager/validation/validation.component';
     TestComponent,
     ProjectsComponent,
     ValidationComponent,
+
    ],
    
   exports: [LayoutComponent],

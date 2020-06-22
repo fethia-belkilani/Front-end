@@ -1,6 +1,6 @@
 <div class="row tex-center" style="margin-bottom: 10px;;">
     <div class="col-6  row">
-        <span nz-typography class="col-md-3">Projet:</span>
+        <span nz-typography class="col-md-3"> <strong>Projet:</strong></span>
         <nz-select class="col-md" nzShowSearch nzAllowClear nzPlaceHolder="Gestion des imputations  " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
             <nz-option *ngFor=" let project of alllProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
         </nz-select>
@@ -14,13 +14,13 @@
         </div>
     </div>
     <div class="col-2  col-c ">
-        <button style="float:right;" (click)="showModal()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="download" class="sml-btn-icon"></i>Génerer un rapport</button>
+        <button style="float:right;" (click)="exportexcel()" nz-button nzType="primary" [nzSize]="size"><i nz-icon nzType="download" class="sml-btn-icon"></i>Génerer un rapport</button>
     </div>
 </div>
 
 <div class="row ">
     <div class="col-6  row">
-        <span nz-typography class="col-md-3">Collaborateurs:</span>
+        <span nz-typography class="col-md-3"><strong>Collaborateurs:</strong></span>
         <nz-select style="margin-left:15px; width:69%;" nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="collaborateurs" [(ngModel)]="selectedCollaboratorsList" (ngModelChange)="onChangeCol(selectedCollaboratorsList) ">
             <nz-option *ngFor=" let collaborator of collaboratorsList" [nzValue]="collaborator" [nzLabel]="collaborator.name"></nz-option>
         </nz-select>
@@ -45,53 +45,53 @@
 
 
 <div id="table" class="table-editable center ">
-    <table class="table table-bordered table-responsive-md table-striped ">
+    <table id="excel-table" class="table table-bordered table-responsive-md table-striped ">
         <thead>
-
-            <th colspan="2"> </th>
-
-
+            <th colspan="2" style="width: 35%;"> </th>
             <th scope="col" style="width: 7% ;" *ngFor="let date  of currentWeek"> <span nz-typography>{{formWeek(date)}}</span></th>
-            <th colspan="2">Evaluation/semaine </th>
+            <th colspan="2"> <span nz-typography>Evaluation</span>
+            </th>
+
         </thead>
         <tr>
-            <th>
-                ID Collaborteur
+            <th style="width: 8%;">
+                <span nz-typography>ID </span>
             </th>
-            <th>Nom collaborateur</th>
+            <th> <span nz-typography>Nom Collaborteur</span>
+            </th>
             <th *ngFor="let day of weekdays ">
                 <span nz-typography>{{ day }}</span>
             </th>
-            <th class="text-center ">Total</th>
-            <th>Valider</th>
+            <th> <span nz-typography>Total</span>
+            </th>
+            <th><span nz-typography>Valider</span></th>
+
         </tr>
-
-
-
 
 
         <ng-container *ngFor="let item of map | keyvalue">
             <tr>
                 <td>
-                    <span nz-typography>{{item.key.id}}</span>
+                    <span nz-typography><strong>{{item.key.id}}</strong></span>
                 </td>
                 <td>
 
-                    <span nz-typography>{{item.key.name}}</span>
+                    <span nz-typography><strong>{{item.key.name}}</strong> </span>
                 </td>
 
-                <td *ngFor="let imp of item.value ;let ind=index">
-                    <input type="text" nz-typography [(ngModel)]=" imp.hours " readonly>
-
-
+                <td class="centering" *ngFor="let imp of item.value ;let ind=index">
+                    <span nz-typography [innerHTML]='imp.hours'></span>
 
                 </td>
 
-                <td>sum</td>
+                <td class="centering">
+                    <span nz-typography>{{sumUser(item.key)}}</span>
+
+                </td>
 
                 <td style="text-align:center;">
 
-                    <a title="Soumettre pour validation " (click)="showConfirm(item.value) "><img src="../assets/images/no.png" style="width: 20px; margin-left: 10px; " />
+                    <a title="Soumettre pour validation " (click)="validate(item.value) "><img src="../assets/images/no.png" style="width: 20px; margin-left: 10px; " />
                     </a>
                 </td>
 
