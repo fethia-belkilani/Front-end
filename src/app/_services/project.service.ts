@@ -22,17 +22,17 @@ export class ProjectService {
   }
 
   getProjectCollabs(projectId) :Observable<Array<User>>{
-    return this.http.get<Array<User>>(`${environment.apiUrl}/projects/user/${this.user.id}/project/${projectId}`); 
+    return this.http.get<Array<User>>(`${environment.apiUrl}/users/team/${this.user.id}/${projectId}`); 
 
   }
 
 getWeekImputations(userId:number,projectId:number,date:string):Observable<Array<Imputation>>{
-  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/weekimputations/${userId}/${projectId}/${date}`);
+  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/imputations/weekimputations/${userId}/${projectId}/${date}`);
 
 }
 
 getSentImputations(userId:number,projectId:number,date:string):Observable<Array<Imputation>>{
-  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/projects/sentweekimputations/${userId}/${projectId}/${date}`);
+  return this.http.get<Array<Imputation>>(`${environment.apiUrl}/imputations/sentweekimputations/${userId}/${projectId}/${date}`);
 
 }
 

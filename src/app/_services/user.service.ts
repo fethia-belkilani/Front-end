@@ -26,8 +26,9 @@ export class UserService {
 }
 
 
-update(user:User){
-  return this.http.put(`${environment.apiUrl}/users/`,user);
+updateRole(id:number, role:boolean){
+  return this.http.put(`${environment.apiUrl}/users/role/${id}/${role}`,"");
+
 
 }
 

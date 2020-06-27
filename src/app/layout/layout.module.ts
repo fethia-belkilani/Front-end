@@ -22,6 +22,12 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { ProjectsComponent } from './manager/projects/projects.component';
 import { ValidationComponent } from './manager/validation/validation.component';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+
 
 
 
@@ -41,6 +47,9 @@ import { ValidationComponent } from './manager/validation/validation.component';
     NzDropDownModule,
     NzListModule,
     NzFormModule ,
+    NzPopoverModule,
+    NzAlertModule,
+    Ng2SearchPipeModule,
 
  
 

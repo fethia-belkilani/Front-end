@@ -32,11 +32,13 @@
             }
             
             td span {
-                font-size: 14px;
+               font-size: 14px;
                 text-align: center;
             }
             
             .centering {
+                font-size: 14px;
+
                 text-align: center;
             }
             
@@ -78,4 +80,30 @@
             
             .sml-btn-icon {
                 vertical-align: 0.1em!important
+            }
+            
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            
+            input:invalid {
+                border-color: red;
+            }
+            
+            input,
+            input:valid {
+                border-color: #ccc;
+            }
+            
+            .error-div {
+                margin-bottom: 15px;
+                height: 35px;
+                width: 50%;
+            }
+            event-text{
+                
+                font-size: unset;
+                text-align: center;
             }

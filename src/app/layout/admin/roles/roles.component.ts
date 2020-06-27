@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { UserService } from './../../../_services/user.service';
 import { User } from 'src/app/_models/user';
 import { element } from 'protractor';
-import { Validators } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 
 
@@ -11,8 +11,12 @@ import { Validators } from '@angular/forms';
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.css']
 })
+
 export class RolesComponent implements OnInit {
-  
+  term: string;
+  usersList: User[] =[]
+
+
   constructor(private userService:UserService) {
   }
 
@@ -24,8 +28,8 @@ export class RolesComponent implements OnInit {
   
    }
 
-  usersList: User[] =[]
 
+ 
 
   getAllUsers(){
     let myusers: Array<any> = [];
@@ -45,8 +49,8 @@ export class RolesComponent implements OnInit {
 
   }
 
-  UpdateUser(u){
-    this.userService.update(u)
+  UpdateUser(id:number,role:boolean){
+    this.userService.updateRole(id,role)
         .subscribe(
           res => {
             console.log("res:", res);
@@ -56,16 +60,17 @@ export class RolesComponent implements OnInit {
         )
   }
 
-  onFilterChange($event,id,name,role,state,validators,collaborators){
+  onFilterChange($event,id,name,state,){
     console.log("you changed the user",name)
-    var userToUpdate: User = {
-      id:id, 
-      name:name,
-      isValidator:state,
-      collaborators:collaborators,
-      validators:validators
-    }
-    this.UpdateUser(userToUpdate)
+    
+    this.userService.updateRole(id,state)
+        .subscribe(
+          res => {
+            console.log("res:", res);
+            console.log('okkkk')
+          },
+          err => console.log(err)
+        )
 
   }            
 
@@ -75,4 +80,8 @@ export class RolesComponent implements OnInit {
   }
    
 
+
+
+
+ 
 }

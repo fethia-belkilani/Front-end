@@ -1,3 +1,35 @@
+<div >
+
+    <h4  nz-typography nzType="secondary" id="title" z-typography>Rôles</h4>
+
+
+<div>
+  <nz-input-group [nzSuffix]="suffixIconSearch"  style="width:38% ; margin-bottom: 10px;">
+    <input  type="text" nz-input placeholder="Recherche"   [(ngModel)]="term" />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
+
+</div>
+</div>
+
+
+
+ 
+
+
+
+  
+
+
+
+
+
+
+
+
+  
 <div class="table-wrapper-scroll-y my-custom-scrollbar">
 
     <table class="table table-bordered table-striped mb-0">
@@ -13,11 +45,11 @@
         </thead>
         <tbody>
 
-            <tr *ngFor=" let user of usersList ">
+            <tr *ngFor=" let user of usersList | filter:term">
                 <td>
                     <span nz-typography>{{user.id}}</span></td>
                 <td><span nz-typography>{{user.name}}</span></td>
-                <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.role,user.isValidator,user.validators,user.collaborators) "></td>
+                <td nzShowCheckbox [(nzChecked)]="user.isValidator " (nzCheckedChange)="log(usersList) " (change)="onFilterChange($event,user.id,user.username,user.isValidator) "></td>
 
             </tr>
 

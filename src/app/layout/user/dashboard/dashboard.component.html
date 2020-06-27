@@ -10,15 +10,15 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center  mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Mes Taches</h1>
-                    <nz-select style=" margin-left: 4% ; width: 30%;" nzShowSearch nzAllowClear nzPlaceHolder=" Choisir un projet " [(ngModel)]="selectedValue ">
-                        <nz-option nzLabel="Jack " nzValue="jack "></nz-option>
-                        <nz-option nzLabel="Lucy " nzValue="lucy "></nz-option>
-                        <nz-option nzLabel="Tom " nzValue="tom "></nz-option>
+                <div class=" align-items-center  mb-4">
+                    <h4  nz-typography nzType="secondary" id="title" z-typography>Mes tâches</h4>
+                   
+
+                    <nz-select style=" width: 30%;" nzShowSearch nzAllowClear nzPlaceHolder="Choisir un projet " [(ngModel)]="selectedProject " (ngModelChange)="onChange(selectedProject) ">
+                        <nz-option *ngFor=" let project of intialProjectList " [nzValue]="project " [nzLabel]="project.name+ ' ---id:'+project.id "></nz-option>
+                
                     </nz-select>
-
-
+                    <button  style="margin-left: 4%;" nz-button nzType="primary" (click)="handleOk() ">OK</button>
 
 
                 </div>
@@ -33,7 +33,7 @@
                                 <div class="row no-gutters align-items-center ">
                                     <div class="col mr-2 ">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 ">Non traitées</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">5
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">{{initial}}
                                         </div>
                                     </div>
                                     <div class="col-auto ">
@@ -51,7 +51,7 @@
                                 <div class="row no-gutters align-items-center ">
                                     <div class="col mr-2 ">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1 ">Envoyées</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">10</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">{{sent}}</div>
                                     </div>
                                     <div class="col-auto ">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300 "></i>
@@ -70,7 +70,7 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1 ">Validées</div>
                                         <div class="row no-gutters align-items-center ">
                                             <div class="col-auto ">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 ">50%</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 ">{{valid}}</div>
                                             </div>
                                             <div class="col ">
                                                 <div class="progress progress-sm mr-2 ">
@@ -93,8 +93,8 @@
                             <div class="card-body ">
                                 <div class="row no-gutters align-items-center ">
                                     <div class="col mr-2 ">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 ">Refusées</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">18</div>
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 ">Total</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800 ">{{total}}</div>
                                     </div>
                                     <div class="col-auto ">
                                         <i class="fas fa-comments fa-2x text-gray-300 "></i>
@@ -103,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+                  
                 </div>
 
                 <!-- Content Row -->
