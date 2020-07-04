@@ -13,6 +13,7 @@ import { ProjectsComponent } from './manager/projects/projects.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
+      //{ path: '', pathMatch: 'full', redirectTo: 'user' }, a common interface
       { path: 'user', component: DashboardComponent , data: { roles: [Role.User ] }},
       { path: 'home', component: HomeComponent , data: { roles: [Role.User] }},
       { path: 'admin', component: CalendarComponent, data: { roles: [Role.Admin] } },
@@ -22,8 +23,6 @@ const routes: Routes = [
       { path: 'test', component: TestComponent,  },
       { path: 'validation', component: ValidationComponent,  },
       { path: 'projects', component: ProjectsComponent,  },
-
-
     ]
   },
 ];

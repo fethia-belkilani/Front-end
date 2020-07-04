@@ -9,7 +9,7 @@
 
         <!-- Login Form -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <input type="text" id="username" class="fadeIn second" placeholder="Login" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+            <input type="text" id="username" class="fadeIn second" placeholder="Identifiant" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                 <div *ngIf="f.username.errors.required">Username is required</div>
             </div>

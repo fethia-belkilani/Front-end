@@ -107,3 +107,19 @@
                 font-size: unset;
                 text-align: center;
             }
+            .btn-status{
+                height: 22px;
+                text-align: center;
+                font-size: 13px;  
+                margin-bottom: 0px;          
+            }
+            .btn-status-sent{
+                background-color: #FFC107; 
+                border-color: #FFC107;
+            }
+            .btn-status-valid{
+                background-color: #28A745;
+                border-color: #28A745;
+            }
+
+            

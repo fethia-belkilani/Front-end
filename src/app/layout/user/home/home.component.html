@@ -20,8 +20,10 @@
     </div>
 </div>
 <div class="error-div">
-    <nz-alert *ngIf="showError" nzType="error" nzMessage="Valeur invalide, doit etre [0, 0.25, 0.5, 0.75, 1]"></nz-alert>
+    <nz-alert *ngIf="showError" nzType="error" nzMessage={{errorMessage}}></nz-alert>
 </div>
+
+
 <div id="table" class="table-editable center ">
     <table class="table table-bordered table-responsive-md table-striped ">
         <thead>
@@ -42,7 +44,7 @@
             </th>
             <th> <span nz-typography>Total</span>
             </th>
-            <th><span nz-typography>Envoyer</span></th>
+            <th><span nz-typography>Status</span></th>
         </tr>
 
         <ng-container *ngFor="let item of map | keyvalue">
@@ -63,9 +65,11 @@
 
 
                 <td class="centering ">
+                   
+                    <button *ngIf="statusMap.get(item.key.id) ==0" nz-button nzType="primary" nzSize="small" (click)="showConfirm(item.value) " class="btn-status">Initial</button>
+                    <button *ngIf="statusMap.get(item.key.id) ==1"nz-button nzType="primary" nzSize="small" class="btn-status btn-status-sent" >Envoyée</button>
+                    <button *ngIf="statusMap.get(item.key.id) ==2"nz-button nzType="primary" nzSize="small"  class="btn-status btn-status-valid">Validée</button>
 
-                    <a title="Soumettre pour validation " (click)="showConfirm(item.value) "><img src="../assets/images/soumettre.png " style="width: 20px; " />
-                    </a>
                 </td>
 
             </tr>
@@ -80,7 +84,8 @@
             <td class="centering " *ngFor="let i of [0,1,2,3,4,5,6] ">
                 <span nz-typography>{{sumDay(i)}}</span>
             </td>
-            <td></td>
+            <td class="centering "> <span nz-typography>{{total}}</span>
+            </td>
             <td></td>
 
         </tr>

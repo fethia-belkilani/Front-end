@@ -8,7 +8,7 @@ import { Role } from '../_models';
 const users: User[] = [
     { id: 2, username: 'admin', password: 'admin', role: Role.Admin, name:'Administrateur', isValidator:false ,validators:[],collaborators:[]},
     { id: 1, username: 'user', password: 'user',role: Role.User,name:"fethia", isValidator:false ,validators:[],collaborators:[] },
-    { id: 3, username: 'val', password: 'val',role: Role.User,name:"Jameeel", isValidator:true ,validators:[],collaborators:[] }
+    { id: 3, username: 'val', password: 'val',role: Role.User,name:"Manager", isValidator:true ,validators:[],collaborators:[] }
 
 ];
 

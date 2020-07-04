@@ -47,17 +47,17 @@ export class TestComponent implements OnInit {
   }
 
   UpdateUser(u){
-    this.userService.update(u)
+   /* this.userService.update(u)
         .subscribe(
           res => {
             console.log("res:", res);
             console.log('okkkk')
           },
           err => console.log(err)
-        )
+        )*/
   }
 
-  onFilterChange($event,id,name,role,state,validators,collaborators){
+ /* onFilterChange($event,id,name,role,state,validators,collaborators){
     console.log("you changed the user",name)
     var userToUpdate: User = {
       id:id, 
@@ -68,7 +68,7 @@ export class TestComponent implements OnInit {
     }
     this.UpdateUser(userToUpdate)
 
-  }
+  }*/
 
   log(value: object[]): void {
     console.log(value);

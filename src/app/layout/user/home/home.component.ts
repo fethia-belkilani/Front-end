@@ -12,6 +12,8 @@ import { User } from 'src/app/_models';
 import { getWeek } from 'src/app/common_utils';
 import { kk } from 'date-fns/locale';
 import { Event } from './../../../_models/event';
+import { MergeMapSubscriber } from 'rxjs/internal/operators/mergeMap';
+import { first, map } from 'rxjs/operators';
 
 
 
@@ -39,7 +41,10 @@ export class HomeComponent implements OnInit {
   weekEvents: Event[]
   user = this.authenticationService.currentUserValue
   showError = false;
-
+  private total=0;
+  buttonStatus = 0;
+  statusMap = new Map();
+  errorMessage = "";
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -56,7 +61,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProjects();
-    this.getEvents(this.today)
+    this.getEvents(this.x.format('YYYY-MM-DD'))
+    
   }
 
 
@@ -107,12 +113,7 @@ export class HomeComponent implements OnInit {
       imputationData => {
         let weekImp: Array<any> = [];
         this.currentWeek.forEach(day => {
-          let obj = {
-            date: null,
-            hours: null,
-            id: null,
-            status: null
-          };
+          let obj = new Imputation();
           imputationData.forEach(element => {
             if (day === this.formDay(new Date(element.date))) {
               obj = element;
@@ -120,7 +121,9 @@ export class HomeComponent implements OnInit {
           });
           weekImp.push(obj)
         });
-        this.map.set(project, weekImp)
+        this.map.set(project, weekImp);
+        this.totale(this.map);
+        this.checkStatus(weekImp, project.id);
       },
       err => {
         console.log(err);
@@ -175,14 +178,23 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  CreateImputation(imputation) {
+  CreateImputation(imputation, project, index) {
     this.imputationService.create(imputation)
       .subscribe(
         res => {
           console.log("res:", res);
           console.log('created')
+          let projectImputations = this.map.get(project);
+          projectImputations[index] = res;
+          this.map.set(project, projectImputations);
         },
-        err => console.log(err)
+        err => {
+          if(err.status === 406) {
+            console.log(err.status);
+            this.errorMessage = "Totale invalide"
+            this.showError = true;
+          }
+        }
       )
   }
 
@@ -218,12 +230,13 @@ export class HomeComponent implements OnInit {
           user: user,
           status: Status.Initial
         }
-        this.CreateImputation(imput)
+        this.CreateImputation(imput, project, index)
       }
     }
     else {
       console.log(hours)
-      this.warningVal()
+      this.errorMessage = "Valeur invalide, doit etre [0, 0.25, 0.5, 0.75, 1]"
+      this.showError=true
     }
   } else {
     //error o5or
@@ -235,7 +248,7 @@ export class HomeComponent implements OnInit {
   warningVal(): void {
     this.modal.warning({
       nzTitle: 'Valeur  ',
-      nzContent: 'Le total par jour dit etre <1' 
+      nzContent: 'Le total par jour doit etre <=1' 
     });
   }
 
@@ -268,6 +281,17 @@ export class HomeComponent implements OnInit {
     return s
   }
 
+  totale(map):void{
+   var  t=0
+    if(map.size!=0){
+     map.forEach((list: Imputation[], project: Project)=>{
+        t+= this.sumWeek(project)
+      });
+    }
+    this.total=t
+
+  }
+
 
   /////////////////////////////   Modal code   ///////////////////////////////////////////
   showModal(): void {
@@ -289,6 +313,8 @@ export class HomeComponent implements OnInit {
     if (!(this.selectedProjectsList.find(project => project.id === this.selectedProject.id))) {
       this.selectedProjectsList.push(this.selectedProject)
       this.handleOk()
+      
+
     }
     else {
       this.warningSelectedproject()
@@ -316,6 +342,7 @@ export class HomeComponent implements OnInit {
       nzContent: 'Cette activité a été déjà validée par votre manager '
     });
   }
+
   sendToValidation(list: Imputation[]) {
     var sending: Imputation[] = []
     for (let imp of list) {
@@ -325,35 +352,42 @@ export class HomeComponent implements OnInit {
     }
     console.log("sending", sending)
     this.imputationService.changeStatus("Sent", sending).subscribe(
-      res => {
+      (res: Imputation[]) => {
         console.log("res:", res);
-        console.log('lallala')
+        console.log('lallala');
+        if(res.length > 0) this.checkStatus(res, res[0].project.id);
       },
       err => console.log(err)
     )
-
   }
-  showConfirm(listImputations): void {
+
+  showConfirm(listImputations:Imputation[]): void {
     this.modal.confirm({
       nzTitle: 'Soumettre cette activité pour validation?',
       nzContent: 'Une fois validée, vous ne pourrez jamais effectuer des changements',
       nzOnOk: () => {
-        this.sendToValidation(listImputations)
+       this.sendToValidation(listImputations)
+       
       }
 
     });
 
   }
 
-  isSent(list: Imputation[]) {
-    var s = false
+  checkStatus(list: Imputation[], projectId: any): void {
+    var s =0
     for (let imp of list) {
-      if (imp.id != null && imp.status == Status.Sent)
-        s = true
-      break;
+      if (imp.id != null ){
+        switch(imp.status){
+          case Status.Sent:s=1;
+          break;        
+          case Status.Valid:s=2;
+          break;
+        }
+      }
     }
-    return s
-
+    this.statusMap.set(projectId, s);
+    console.log(this.statusMap);
   }
 
 
