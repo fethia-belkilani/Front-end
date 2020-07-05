@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   buttonStatus = 0;
   statusMap = new Map();
   errorMessage = "";
+  total=0
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -167,8 +168,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  CreateImputation(imputation, userId, date, project, index) {
-    this.imputationService.create(imputation, userId, date)
+  CreateImputation(imputation, project, index) {
+    this.imputationService.create(imputation)
       .subscribe(
         res => {
           console.log("res:", res);
@@ -219,7 +220,7 @@ export class HomeComponent implements OnInit {
             user: user,
             status: Status.Initial
           }
-          this.CreateImputation(imput, user.id, dateImputation, project, index)
+          this.CreateImputation(imput, project, index)
         }
       }
       else {
