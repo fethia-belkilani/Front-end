@@ -20,8 +20,9 @@
     </div>
 </div>
 <div class="error-div">
-    <nz-alert *ngIf="showError" nzType="error" nzMessage={{errorMessage}}></nz-alert>
+    <nz-alert  style="margin-bottom: 16px;" *ngIf="showError" nzType="error" nzMessage={{errorMessage}} nzShowIcon ></nz-alert>
 </div>
+
 
 
 <div id="table" class="table-editable center ">
@@ -58,7 +59,7 @@
                 </td>
                 <td class="centering" *ngFor="let imp of item.value ;let ind=index">
                     <span  nz-typography *ngIf="this.weekEvents[ind].id !== null">{{this.weekEvents[ind].title }}</span>
-                    <input *ngIf="this.weekEvents[ind].id === null" type="number" [disabled]="ind ==5 ||ind==6 " nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key,imp.hours,ind) "> </td>
+                    <input *ngIf="this.weekEvents[ind].id === null" type="number" [disabled]="ind ==5 ||ind==6 || statusMap.get(item.key.id) ==2" nz-typography [(ngModel)]=" imp.hours " (change)=" changeImputations(imp,item.key,imp.hours,ind) "> </td>
 
                 <td class=" centering ">
                     <span nz-typography>{{sumWeek(item.key)}}</span></td>
@@ -66,7 +67,7 @@
 
                 <td class="centering ">
                    
-                    <button *ngIf="statusMap.get(item.key.id) ==0" nz-button nzType="primary" nzSize="small" (click)="showConfirm(item.value) " class="btn-status">Initial</button>
+                    <button *ngIf="statusMap.get(item.key.id) ==0" nz-button nzType="primary" nzSize="small" (click)="showConfirm(item.value) " class="btn-status">Initiale</button>
                     <button *ngIf="statusMap.get(item.key.id) ==1"nz-button nzType="primary" nzSize="small" class="btn-status btn-status-sent" >Envoyée</button>
                     <button *ngIf="statusMap.get(item.key.id) ==2"nz-button nzType="primary" nzSize="small"  class="btn-status btn-status-valid">Validée</button>
 

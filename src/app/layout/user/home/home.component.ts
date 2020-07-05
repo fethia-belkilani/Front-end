@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   buttonStatus = 0;
   statusMap = new Map();
   errorMessage = "";
-  total=0
+  total = 0
 
 
   weekdays = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
@@ -181,7 +181,8 @@ export class HomeComponent implements OnInit {
         err => {
           if (err.status === 406) {
             console.log(err.status);
-            this.errorMessage = "Total invalid"
+            this.errorMessage = "Temps invalide,cette valeur dépasse la limite 1 par jour"
+            setTimeout(() => { this.showError = false; }, 3000);
             this.showError = true;
           }
         }
@@ -225,8 +226,9 @@ export class HomeComponent implements OnInit {
       }
       else {
         console.log(hours)
-        this.errorMessage = "Valeur invalide, doit etre [0, 0.25, 0.5, 0.75, 1]"
-        this.showError = true
+        this.errorMessage = "Temps invalide, les valeurs possibles sont: 0, 0.25, 0.5, 0.75 et 1"
+        setTimeout(() => { this.showError = false; }, 3000);
+        this.showError = true;
       }
     } else {
       this.warningVal()
