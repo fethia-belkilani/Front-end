@@ -18,8 +18,8 @@ export class ImputationService {
   return this.http.put(`${environment.apiUrl}/imputations/`,imput);
 }
 
-create(imput:Imputation) {
-  return this.http.post(`${environment.apiUrl}/imputations/`, imput)
+create(imput:Imputation,userId:number,date:string) {
+  return this.http.post(`${environment.apiUrl}/imputations/${userId}/${date}`, imput)
 }
 
 changeStatus(status:string, listImput:Imputation[]){
